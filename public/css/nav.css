@@ -1,0 +1,66 @@
+
+@import url('./fonts.css');
+
+.container-nav {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 70px;
+    background-color: #131B1E;
+    box-shadow: #a1a1a1 0 0 10px;
+    color: #fff !important;
+    font-family: monospace !important;
+}
+
+.title-nav {
+    width: 70px;
+}
+
+.title-nav h1 {
+    font-family: monospace;
+    font-weight: bold;
+}
+
+.nav-ul li {
+    padding: 15px 30px;
+    list-style: none;
+    text-align: start;
+    font-family: monospace;
+    transition: all .3s ease-in-out;
+    margin: 0 1px;
+}
+
+
+.nav-ul li a {
+    padding: 15px 100px 15px 0;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1em;
+}
+
+.btn_closed_sesion {
+    position: absolute;
+    bottom: 0;
+    width: 280px;
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    padding: 15px 30px;
+    color: #fff;
+    font-size: 1.2em;
+}
+
+.fa-solid {
+    padding: 5px 0;
+}
+
+.active {
+    background-color: #2fb380;
+    color: #fff;
+}
+
+@media (max-width: 800px) {
+    
+}
+

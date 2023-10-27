@@ -1,0 +1,383 @@
+
+@import url('./fonts.css');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    margin-left: 260px;
+}
+
+.s-denuncia-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 25px;
+}
+
+.s-denuncia-top form input {
+    max-width: 90%;
+    width: 300px;
+    padding: 10px 13px;
+    border-radius: 7px;
+    outline: none;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.2) 2px 2px 5px;
+}
+
+.s-denuncia-top button {
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 5px;
+    padding: 10px 20px;
+    border: none;
+    background-color: #cdf463;
+    font-family: Gabarito;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.s-denuncia-bottom {
+    padding: 0 25px;
+}
+
+.s-denuncia-bottom table {
+    background-color: #fff;
+    border-radius: 7px;
+    padding: 15px 25px;
+    font-family: Nunito Sans !important;
+}
+
+.s-denuncia-bottom table tr th {
+    padding: 10px 20px;
+    border-bottom: 1px rgba(0, 0, 0, 0.2) solid;
+}
+
+.s-denuncia-bottom table tr td {
+    text-align: center;
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.s-denuncia-bottom table tr td form button {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    border-radius: 7px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* .s-denuncia-bottom table tr th {
+    border: 1px solid #000;
+} */
+
+.boxes-inf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 25px;
+    gap: 25px;
+}
+
+.box-inf {
+    width: 200px;
+    height: 120px;
+    border-radius: 7px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-inf span {
+    font-size: 30px;
+    font-weight: bold;
+    font-family: monospace;
+}   
+
+.box-inf p {
+    font-family: monospace;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.cerrar_sesion {
+    position: fixed;
+    display: none;
+    top: 0;
+    right: 0;
+    padding: 15px 20px;
+    background-color: #fff;
+    color: #000;
+    text-decoration: none;
+    border-radius: 7px;
+    box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 15px;
+    margin: 55px 40px;
+}
+
+.cerrar_sesion button {
+    background-color: #f3f3f3;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #fff;
+    border-radius: 7px;
+    font-weight: bold;
+    background-color: #da292e;
+}
+
+.fa-chevron-down:hover > .cerrar_sesion{
+    display: block;
+}
+
+#form-perfil {
+    padding: 25px;
+    display: flex;
+    gap: 25px;
+}
+
+#form-perfil form {
+    padding: 25px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.1) 2px 2px 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+#form-perfil form span {
+    font-size: 24px;
+}
+
+#form-perfil form input {
+    max-width: 95%;
+    width: 350px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+}
+
+#form-perfil form input:focus {
+    border: #cdf463 1px solid;
+    box-shadow: #f2f2f2 0 0 5px;
+}
+
+#form-perfil form button {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #cdf463;
+    border: none;
+    border-radius: 7px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-weight: bold;
+}
+
+.form-cambio-clave {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    justify-content: center;
+}
+
+.form-clave {
+    position: absolute;
+    padding: 25px;
+    background: #fff;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    padding-top: 35px;
+    box-shadow: rgba(0, 0, 0, 0.2) 3px 3px 10px;
+    border-radius: 7px;
+}
+
+.xmark {
+    position: absolute;
+    top: 0;
+    padding: 12px;
+    border-radius: 7px;
+    cursor: pointer;
+    background-color: #da292e;
+    color: #fff;
+    right: 0;
+}
+
+.form-clave input {
+    max-width: 95%;
+    width: 350px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+}
+
+.form-clave button {
+    background-color: #f3f3f3;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #000;
+    border-radius: 7px;
+    font-weight: bold;
+    background-color: #cdf463;
+}
+
+.alert-danger {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    padding: 10px 20px;
+    background-color: #da292e;
+    color: #fff;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin: 15px;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.alert-danger a {
+    text-decoration: none;
+    color: #fff;
+}
+
+.form-registro-no-usuarios {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.1);
+    justify-content: center;
+}
+
+
+.form-registro-no-usuarios form {
+    position: absolute;
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 10px;
+    max-width: 90%;
+    width: 700px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0 0 10px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.form-registro-no-usuarios form input {
+    max-width: 99%;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+}
+
+.form-registro-no-usuarios form input:focus {
+    border: #cdf463 1px solid;
+    box-shadow: #f2f2f2 0 0 5px;
+}
+
+.form-registro-no-usuarios form button {
+    background-color: #f3f3f3;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: #000;
+    border-radius: 7px;
+    font-weight: bold;
+    background-color: #cdf463;
+}
+
+.form-registro-no-usuarios form textarea {
+    max-width: 99%;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+    resize: vertical;
+}
+
+.form-registro-no-usuarios form select {
+    max-width: 98%;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+} 
+
+.form-registro-no-usuarios form select:focus {
+    border: #cdf463 1px solid;
+    box-shadow: #f2f2f2 0 0 5px;
+}
+
+.inp-cont {
+    display: flex;
+    gap: 0px;
+}
+
+.inp-cont div {
+    width: 100%;
+}
+
+.cont-for-btn {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cont-for-btn a {
+    color: rgb(101, 101, 255);
+    font-size: 14px;
+}
+
+@media (max-width: 1120px) {
+    #form-perfil {
+        flex-wrap: wrap;
+    }
+    #form-perfil form {
+        width: 100%;
+    }
+    #form-perfil form input {
+        width: 100%;
+    }
+    #cont-forms {
+        width: 100% !important;
+    }
+}
+
+.none {
+    display: none;
+}

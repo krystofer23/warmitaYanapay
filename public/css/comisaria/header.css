@@ -1,0 +1,40 @@
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: Anek Kannada;
+    border-bottom: 1px rgba(0, 0, 0, 0.1) solid;
+    padding: 27px 40px;
+    background-color: #fff;
+}
+
+.info-profile-header {
+    display: flex;
+    gap: 10px;
+    align-content: center;
+}
+
+.circulo-perfil {
+    width: 50px;
+    height: 50px;
+    background-color: #cdc3ff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;    
+    align-items: center;
+}
+
+.info-p-header {
+    display: flex;
+    flex-direction: column;
+}
+
+.info-p-header p {
+    font-weight: 600;
+}
+
+.info-p-header span {
+    font-size: 14px;
+}
+
