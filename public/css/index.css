@@ -43,6 +43,17 @@
     justify-content: center;
 }
 
+.m-denuncia-top {
+    padding-top: 15px;
+    justify-content: end;
+}
+
+.m-denuncia-top .agregar_usuarios {
+    padding: 10px 20px;
+    background-color: #c3c3c3;
+    border: none;
+}
+
 @media (max-width: 1080px) {
     #cont-profile {
         flex-wrap: wrap;

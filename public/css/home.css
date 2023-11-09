@@ -50,6 +50,7 @@ main {
     width: 900px;
     font-family: Arial, Helvetica, sans-serif;
     box-shadow: #e3e3e396 0 0 15px;
+    background-color: #2a2a2a;
 }
 
 .btn_x {

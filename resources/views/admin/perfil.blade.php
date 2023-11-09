@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,33 +19,48 @@
     <nav>
         <div class="nav-up">
             <img src="./img/Logo.png" alt="" class="img-logo">
-            <span>Warmita Yanapay Comisaria</span>
+            <span>Warmita Yanapay Dashboard</span>
         </div>
 
         <ul class="nav-down">
             <li class="">
                 <i class="fa-solid fa-house"></i>
-                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/HomeA') }}">Inicio</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-bell"></i>
-                <a href="{{ url('Alertas') }}">Alertas</a>
+                <a href="{{ url('AlertaA') }}">Alertas</a>
             </li>
-
+            
             <li class="">
                 <i class="fa-solid fa-clipboard"></i>
-                <a href="{{ url('Denuncias') }}">Denuncias</a>
+                <a href="{{ url('DenunciasA') }}">Denuncias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('Usuarios') }}">Usuarios</a>
+                <a href="{{ url('') }}">Usuarios</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-building-flag"></i>
+                <a href="{{ url('') }}">Comisarias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-receipt"></i>
+                <a href="{{ url('') }}">Evidencias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-address-book"></i>
+                <a href="{{ url('') }}">Contactos</a>
             </li>
 
             <li class="li-active">
                 <i class="fa-solid fa-user"></i>
-                <a href="{{ url('Perfil') }}">Perfil</a>
+                <a href="{{ url('PerfilA') }}">Mi perfil</a>
             </li>
         </ul>
     </nav>
@@ -57,8 +71,8 @@
             <div class="info-profile-header">
                 <div class="circulo-perfil">U</div>
                 <div class="info-p-header">
-                    <p class="m-0">{{ $usuario_comisaria->nombre }}</p>
-                    <span>{{ $usuario_comisaria->correo }}</span>
+                    <p class="m-0">{{ $usuario->name }}</p>
+                    <span>{{ $usuario->email }}</span>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="cursor: pointer; padding-top: 1px">
                     <div class="cerrar_sesion">
@@ -73,7 +87,7 @@
 
         <section class="sec-denuncias" id="form-perfil">
 
-            <form action="{{ url('EditarComisaria') . '/' . $usuario_comisaria->id }}" method="POST">
+            <form action="{{ url('EditarComisaria') . '/' . $usuario->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 
@@ -83,15 +97,11 @@
 
                 <label for="nombre">Nombre</label>
                 <br>
-                <input name="nombre" id="nombre" type="text" value="{{ $usuario_comisaria->nombre }}">
-                <br>
-                <label for="direccion">Dirección</label>
-                <br>
-                <input name="direccion" id="direccion" type="text" value="{{ $usuario_comisaria->direccion }}">
+                <input name="nombre" id="nombre" type="text" value="{{ $usuario->name }}">
                 <br>
                 <label for="correo">Correo</label>
                 <br>
-                <input name="correo" id="correo" type="email" value="{{ $usuario_comisaria->correo }}">
+                <input name="correo" id="correo" type="email" value="{{ $usuario->email }}">
                 <br>
                 <button>Guardar</button>
 
@@ -108,23 +118,64 @@
                     <p style="color: #7f7f7f; padding-top: 2px;">Esta acción es permanente e irreversible. Perderás acceso a la cuenta y toda la información <br> que contiene. (Pide al administrador eliminar la cuenta)</p>
                     <br>
                     <button style="background-color: #da292e; color: #fff;">Eliminar cuenta</button>
-                </form> --}}
+                </form>
                 
+                <br> --}}
+
                 <form>
-                    <span>Cambiar la contraseña de la cuenta de la comisaria</span>
+                    <span>Cambiar la contraseña de la cuenta</span>
                     <br>
                     <p style="color: #7f7f7f; padding-top: 2px;">Esta acción es permanente e irreversible.</p>
                     <br>
                     <button id="btn_cambio_clave" style="background-color: #f5b03a; color: #fff;">Cambiar contraseña</button>
                 </form>
 
+                <br>
+
+            </div>
+
+        </section>
+
+        <section class="d-flex">
+
+            <div class="s-denuncia-bottom">
+                <form action="{{ url('llavePOST') }}" method="POST">
+                    @csrf
+                    <input type="text" name="llave" id="llave" class="none">
+                    <button class="btn btn-primary mb-3" onclick="generarPalabraAleatoria()">Generar llave</button>
+                </form>
+
+                <table class="default w-100" style="width: 100%;" id="mis_denuncias">
+                    <tr style="width: 100%; text-align: center !important">
+                        <th>N°</th>
+                        <th>Llave</th>
+                        <th>Estado</th>
+                        <th>Acciónes</th>
+                    </tr>
+                    @foreach ($llave as $row)
+                    <tr>
+                        <td>{{ $row->id }}</td>
+                        <td>{{ $row->llave }}</td>
+                        @if($row->status == '1')
+                            <td>No ah sido usado</td>
+                        @else
+                            <td>Ya ah sido usado</td>
+                        @endif
+                        <td>
+                            <form action="">
+                                <button style="background: #da292e">Eliminar</button>
+                            </form>
+                        </td>
+                    </tr>
+                    @endforeach
+                </table>
             </div>
 
         </section>
     </main>
 
     <section class="form-cambio-clave none">
-        <form action="{{ url('EditarClave') . '/' . $usuario_comisaria->id }}" class="form-clave" method="POST">
+        <form action="{{ url('') . '/' . $usuario->id }}" class="form-clave" method="POST">
             @csrf
             @method('PUT')
             <i class="fa-solid fa-xmark xmark"></i>
@@ -141,7 +192,7 @@
     @if($errors->any())
     <div class="alert alert-danger mt-3">
     @foreach($errors->all() as $error)
-        <a href="{{ url('/Perfil') }}">{{ $error }}</a>
+        <a href="{{ url('/PerfilA') }}">{{ $error }}</a>
     @endforeach
     </div>
     @endif
@@ -161,5 +212,18 @@
         });
     </script>
     
+    <script>
+        function generarPalabraAleatoria() {
+            const caracteres = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            let cadenaAleatoria = '';
+
+            for (let i = 0; i < 6; i++) {
+                cadenaAleatoria += caracteres.charAt(Math.floor(Math.random() * caracteres.length));
+            }
+            
+            document.querySelector('#llave').value = cadenaAleatoria;
+        }
+    </script>
+
 </body>
 </html>

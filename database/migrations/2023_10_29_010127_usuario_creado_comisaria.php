@@ -11,19 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('usuario_no_registrado', function (Blueprint $table) {
+        Schema::create('usuario_creado_comisaria', function (Blueprint $table) {
             $table->id();
+            
+            $table->unsignedBigInteger('id_victima');
             $table->unsignedBigInteger('id_comisaria');
-
-            $table->string('dni');
-            $table->string('nombre');
-            $table->string('apellido');
-            $table->string('celular');
-            $table->string('direccion');
-            $table->string('correo')->unique();
 
             $table->timestamps();
 
+            $table->foreign('id_victima')->references('id')->on('usuario_victima');
             $table->foreign('id_comisaria')->references('id')->on('usuario_comisaria');
         });
     }
@@ -33,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('usuario_no_registrado');
+        Schema::dropIfExists('usuario_creado_comisaria');
     }
 };

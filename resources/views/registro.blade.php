@@ -5,67 +5,57 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="./css/bootstrap.min.css">
     <link rel="shortcut icon" href="./img/Logo.png" />
-    <link rel="stylesheet" href="./css/index.css">
-    <title>Prevenir | Registro</title>
+    <link rel="stylesheet" href="./css/login.css">
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <title>Warmita Yanapay | Registro</title>
 </head>
-<body style="background: #fff;" id="res">
+<body id="res">
 
-    <div class="container-inicio-sesion pb-3 pt-3">
-        <div class="border rounded-3 p-5 pt-2 bg-white" style="box-shadow: #f3f3f3 0 0 15px; max-width: 95%; width: 700px;">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <div>
-                    <h2>REGISTRO</h2>
-                    <p>Ingrese los datos de la comisaria.</p>
-                </div>
-                <img src="./img/Logo.png" alt="" style="width: 90px">
-            </div>
-
-            <form method="POST" action="{{ url('RegistroComisariaPost') }}">
+    <div class="containerr">
+        <div class="left">
+            <p class="m-0">Registrate en</p>
+            <h2 style="font-size: 28px;">WARMITA YANAPAY WEB</h2>
+            <form style="max-width: 99%; width: 400px;" method="POST" action="{{ url('RegistroComisariaPost') }}">
                 @csrf
-                <div class="d-flex gap-3" id="container-wrap">
-                    <div class="w-100 mb-3">
-                        <label for="nombre" class="form-label">Nombre de la comisaria</label>
-                        <input name="nombre" id="nombre" type="text" class="form-control" placeholder="Nombre de la comisaria" required>
-                    </div>
-                    <div class="w-100 mb-4">
-                        <label for="direccion" class="form-label">Dirección de la comisaria</label>
-                        <input name="direccion" id="direccion" type="text" class="form-control" placeholder="Dirección de la comisaria" required>
-                    </div>
+                <div class="mt-3 mb-1">
+                    <input name="nombre" class="w-100 rounded-5" type="text" placeholder="Nombre" required />
                 </div>
-                <div class="mb-4">
-                    <label for="correo" class="form-label">Correo a registrar por la comisaria</label>
-                    <input name="correo" id="correo" type="email" class="form-control" placeholder="Correo" required>
+                <div class="mt-3 mb-1">
+                    <input name="direccion" class="w-100 rounded-5" type="text" placeholder="Dirección" required />
                 </div>
+                <div class="mt-3 mb-1">
+                    <input name="correo" class="w-100 rounded-5" type="email" placeholder="Correo" required />
+                </div>
+                <div class="mt-3 mb-1">
+                    <input name="clave" class="w-100 rounded-5" type="password" placeholder="Contraseña" required />
+                </div>
+                <div class="mt-3 mb-1">
+                    <input name="llave" class="w-100 rounded-5" type="password" placeholder="Llave" required />
+                </div>
+                <button class="rounded-5 mt-4 w-100" type="submit">Registrarme</button>
 
-                <div class=" mb-4">
-                    <label for="clave" class="form-label">Contraseña</label>
-                    <input name="clave" id="clave" type="password" class="form-control" placeholder="Contraseña" required>
+                @if ($errors->any())
+                <div class="alert alert-danger mt-3">
+                    @foreach ($errors->all() as $error)
+                        <p class="m-0 p-0 text-start"  style="font-size: 14px !important;">{{ $error }}</p>
+                    @endforeach
                 </div>
-
-                <div class=" mb-4">
-                    <label for="llave" class="form-label">
-                        LLave 
-                        <span style="color: #949494">(La llave es proporcionada e unica para poder registrase)</span>
-                    </label>
-                    <input name="llave" id="llave" type="password" class="form-control" placeholder="Llave" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Registrar comisaria</button>
-
-                @if($errors->any())
-                    <div class="alert alert-danger mt-3">
-                        @foreach($errors->all() as $error)
-                            <p class="m-0 p-0">{{ $error }}</p>
-                        @endforeach
-                    </div>
                 @endif
             </form>
+            <div class="text">
+                <p class="mt-4">
+                    ¿Ya tienes una cuenta?
+                    <a class="aa" href="{{ url('InicioSesion') }}">¡Inicia sesión!</a>
+                </p>
+            </div>
         </div>
-
-        <div class="mt-5">
-            <span>¿Ya tienes una cuenta? </span>
-            <a href="{{ url('InicioSesion') }}" class="">Iniciar sesión</a>
+        <div class="right">
+            <h1>WARMITA YANAPAY</h1>
+            <p>
+                Pagina para registrarte en la aplicacion web "Warmita
+                Yanapay"
+            </p>
         </div>
     </div>
 

@@ -1,6 +1,6 @@
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,33 +23,48 @@
     <nav>
         <div class="nav-up">
             <img src="./img/Logo.png" alt="" class="img-logo">
-            <span>Warmita Yanapay Comisaria</span>
+            <span>Warmita Yanapay Dashboard</span>
         </div>
 
         <ul class="nav-down">
             <li class="">
                 <i class="fa-solid fa-house"></i>
-                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/HomeA') }}">Inicio</a>
             </li>
 
             <li class="li-active">
                 <i class="fa-solid fa-bell"></i>
-                <a href="{{ url('Alertas') }}">Alertas</a>
-            </l>
+                <a href="{{ url('AlertaA') }}">Alertas</a>
+            </li>
 
             <li class="">
                 <i class="fa-solid fa-clipboard"></i>
-                <a href="{{ url('Denuncias') }}">Denuncias</a>
+                <a href="{{ url('DenunciasA') }}">Denuncias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('Usuarios') }}">Usuarios</a>
+                <a href="{{ url('') }}">Usuarios</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-building-flag"></i>
+                <a href="{{ url('') }}">Comisarias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-receipt"></i>
+                <a href="{{ url('') }}">Evidencias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-address-book"></i>
+                <a href="{{ url('') }}">Contactos</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-user"></i>
-                <a href="{{ url('Perfil') }}">Perfil</a>
+                <a href="{{ url('PerfilA') }}">Mi perfil</a>
             </li>
         </ul>
     </nav>
@@ -60,8 +75,8 @@
             <div class="info-profile-header">
                 <div class="circulo-perfil">U</div>
                 <div class="info-p-header">
-                    <p class="m-0">{{ $usuario_comisaria->nombre }}</p>
-                    <span>{{ $usuario_comisaria->correo }}</span>
+                    <p class="m-0">{{ $usuario_comisaria->name }}</p>
+                    <span>{{ $usuario_comisaria->email }}</span>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="cursor: pointer; padding-top: 1px">
                     <div class="cerrar_sesion">
@@ -76,8 +91,8 @@
 
         <section class="sec-denuncias">
             <div class="s-denuncia-top">
-                <button><a style="padding: 10px 15px; color: #000; text-decoration: none" href="{{ url('/Alertas') }}">Actualizar</a></button>
-                <button style="background-color: #e84c51;"><a style="padding: 10px 15px; color: #fff; text-decoration: none" href="{{ url('/ReporteDeAlertas') }}">Reporte de alertas</a></button>
+                <button><a style="padding: 10px 15px; color: #000; text-decoration: none" href="{{ url('/AlertaA') }}">Actualizar</a></button>
+                <button style="background-color: #e84c51;"><a style="padding: 10px 15px; color: #fff; text-decoration: none" href="{{ url('/ReporteAlertaA') }}">Reporte de alertas</a></button>
             </div>
 
             <div class="s-denuncia-bottom" id="map">

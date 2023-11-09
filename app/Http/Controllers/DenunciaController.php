@@ -16,35 +16,37 @@ class DenunciaController extends Controller
             $comisaria_id = $_SESSION['id_usuario'];
 
             $this->validate($request, [
-                'id_victima' => 'required|min:8',
+                'id_victima' => 'required|min:8', // dni
                 'lugar' => 'required|min:3',
                 'descripcion' => 'required|min:3',
                 'file' => ''
             ]);
 
-            try {
-                $dni_id_victima = UsuarioNoRegistrado::where('dni', $request->id_victima)->first();
+            $url = 'https://apiperu.dev/api/dni';
 
-                if (!$dni_id_victima) {
-                    $dni_id_victima = UsuarioVictima::where('dni', $request->id_victima)->first();
+            $headers = array(
+                'Content-Type: application/json',
+                'Authorization: Bearer c59a841e3207922843de445f6e4b58dce01fed82aabbaa068163586d1ce3a486'
+            );
 
-                    if (!$dni_id_victima) {
-                        throw new Exception("No se encontró ningún usuario con el DNI proporcionado en ninguno de los modelos.");
-                    }
-                }
-            }
-            catch (Exception $e) {
-                return redirect('/Denuncias')->withErrors(['error' => 'Error al registrar, verifique los datos. (DNI)']);
-            }
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['dni' => $request->id_victima]));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $response = curl_exec($ch);
+
+            curl_close($ch);
     
             if ($request->hasFile('file')) {
                 $image = $request->file('file');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
-                $image->move(public_path('images'), $imageName);
+                $image->move('images', $imageName);
                 
                 Denuncia::create([
                     'id_comisaria' => $comisaria_id,
-                    'id_victima' => $dni_id_victima->dni,
+                    'id_victima' => json_decode($response)->data->numero,
                     'lugar' => $request->lugar,
                     'descripcion' => $request->descripcion,
                     'prueba_media' => '/images/' . $imageName,
@@ -55,7 +57,7 @@ class DenunciaController extends Controller
             else {
                 Denuncia::create([
                     'id_comisaria' => $comisaria_id,
-                    'id_victima' => $dni_id_victima->dni,
+                    'id_victima' => json_decode($response)->data->numero,
                     'lugar' => $request->lugar,
                     'descripcion' => $request->descripcion,
                     'prueba_media' => ''
@@ -65,7 +67,7 @@ class DenunciaController extends Controller
             }
         }
         catch (Exception $e) {
-            return redirect('/Denuncias')->withErrors(['error' => 'Hubo un error al registrar la denuncia, verifique los datos (DNI).']);
+            return redirect('/Denuncias')->withErrors(['error' => 'Hubo un error al registrar la denuncia, verifique los datos (DNI). ']);
         }
     }
 

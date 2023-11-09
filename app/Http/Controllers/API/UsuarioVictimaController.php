@@ -11,26 +11,39 @@ use Illuminate\Support\Facades\Hash;
 
 class UsuarioVictimaController extends Controller
 {
-    public function store(Request $request)
+    public function store (Request $request) 
     {
         try {
-            
             $this->validate($request, [
+                'dni' => 'required|min:8|max:8',
 
-                'dni' => 'required',
-                'name' => 'required',
-                'lastname' => 'required',
-                'phone' => 'required',
+                'phone' => 'required|min:9|max:9',
                 'direction' => 'required',
                 'email' => 'required|email',
-                'password' => 'required'
+                'password' => 'required|min:4'
             ]);
 
-            $usuario = UsuarioVictima::create([
+            $url = 'https://apiperu.dev/api/dni';
 
+            $headers = array(
+                'Content-Type: application/json',
+                'Authorization: Bearer c59a841e3207922843de445f6e4b58dce01fed82aabbaa068163586d1ce3a486'
+            );
+
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['dni' => $request->dni]));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+            $response = curl_exec($ch);
+
+            curl_close($ch);
+
+            UsuarioVictima::create([
                 'dni' => $request->dni,
-                'nombre' => $request->name,
-                'apellido' => $request->lastname,
+                'nombre' => json_decode($response)->data->nombres,
+                'apellido' => json_decode($response)->data->apellido_paterno . ' ' . json_decode($response)->data->apellido_materno,
                 'celular' => $request->phone,
                 'direccion' => $request->direction,
                 'correo' => $request->email,
@@ -39,75 +52,95 @@ class UsuarioVictimaController extends Controller
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Usuario creado con exito',
-                'usuario' => $usuario
-
+                'message' => 'Usuario creado con exito.'
             ], Response::HTTP_CREATED);
-        } 
-        catch (Exception $error) {
+        }
+        catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hubo un error al crear el usuario',
-                'error' => $error->getMessage()
-
+                'message' => 'Hubo un error al buscar o el dni es incorrecto.'
             ], Response::HTTP_BAD_REQUEST);
         }
     }
 
-    public function update(Request $request, $id)
+    public function update (Request $request) 
     {
         try {
-
             $this->validate($request, [
+                'id' => 'required',
 
-                'dni' => 'required|min:8|max:8',
-                'name' => 'required|min:3|max:255',
-                'lastname' => 'required|min:3|max:255',
                 'phone' => 'required|min:9|max:9',
-                'direction' => 'required|min:3|max:255',
-                'email' => 'required|email|min:8|max:255',
-                'password' => 'required|min:4|max:255'
+                'direction' => 'required',
+                'email' => 'required|email'
             ]);
 
-            $usuario = UsuarioVictima::find($id);
+            $usuario = UsuarioVictima::find($request->id);
 
             $usuario->update([
-
-                'dni' => $request->dni,
-                'nombre' => $request->name,
-                'apellido' => $request->lastname,
                 'celular' => $request->phone,
                 'direccion' => $request->direction,
                 'correo' => $request->email,
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'user' => $usuario
+            ], Response::HTTP_OK);
+        }
+        catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un error al actualizar el usuario.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function updatePassword (Request $request) 
+    {
+        try {
+            $this->validate($request, [
+                'id' => 'required',
+                'password' => 'required|min:4',
+            ]);
+
+            $usuario_comisaria = UsuarioVictima::find($request->id);
+
+            $usuario_comisaria->update([
                 'clave' => Hash::make($request->password)
             ]);
 
             return response()->json([
                 'status' => 'success',
-                'message' => 'Usuario actualizado con exito',
-                'usuario' => $usuario
-
+                'message' => 'Contraseña actualizado con exito.'
             ], Response::HTTP_OK);
-        } 
-        catch (Exception $error) {
+        }
+        catch (Exception $e) {
             return response()->json([
                 'status' => 'error',
-                'message' => 'Hubo un error al actualizar el usuario',
-                'error' => $error->getMessage()
-
+                'message' => 'Hubo un error al actualizar la contraseña.'
             ], Response::HTTP_BAD_REQUEST);
         }
     }
 
-    public function destroy($id)
+    public function destroy (Request $request) 
     {
-        $usuario = UsuarioVictima::find($id);
-        $usuario->delete();
+        try {
+            $this->validate($request, [
+                'id' => 'required',
+            ]);
 
-        return response()->json([
-            'status' => 'success',
-            'message' => 'Usuario eliminado con exito',
-            'usuario' => $usuario
-        ], Response::HTTP_OK);
+            UsuarioVictima::find($request->id)->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Usuario eliminado con exito.'
+            ], Response::HTTP_OK);
+        }
+        catch (Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Hubo un error al eliminar el usuario.'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

@@ -1,0 +1,147 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+    text-decoration: none;
+    list-style: none;
+}
+body {
+    background-image: url("./fondo.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.containerr {
+    max-width: 90%;
+    display: flex;
+    height: 80vh;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 25px;
+}
+.left {
+    width: 100%;
+    padding: 20px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 40px;
+    border-radius: 25px 0px 0px 25px;
+}
+.left p {
+    font-size: 30px;
+    font-weight: 300;
+}
+.left h2 {
+    font-size: 30px;
+    font-weight: 700;
+    color: rgb(35, 204, 162);
+}
+.right {
+    width: 100%;
+    padding: 20px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 25px 25px 0px;
+    text-align: center;
+    background: url("asd.png") no-repeat center center;
+    background-size: cover;
+}
+.right p {
+    font-size: 17px;
+    font-weight: 300;
+    padding: 0px 100px;
+}
+.right h2 {
+    font-size: 30px;
+    font-weight: 700;
+}
+input[type="text"],
+input[type="email"],
+input[type="password"],
+button {
+    width: 60%;
+    padding: 8px 18px;
+    color: #474747;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    font-size: 15px;
+    font-weight: 500;
+    outline: none;
+    border: none;
+    border: 1px #0000001f solid;
+    border-radius: 25px;
+    transition: all .1s ease-in-out;
+}
+
+input:focus {
+    box-shadow: rgba(0, 0, 0, 0.2) 0 0 5px;
+}
+
+button {
+    width: 60%;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: rgb(62, 212, 155);
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: 500;
+}
+a {
+    color: rgb(255, 255, 255);
+}
+.text p {
+    font-size: 15px;
+    font-weight: 400;
+}
+.aa {
+    font-size: 15px;
+    font-weight: 600;
+    color: rgb(52, 197, 149);
+}
+@media (max-width: 1191px) {
+    .containerr {
+        flex-direction: column;
+        width: 90%;
+        height: auto;
+    }
+    .left,
+    .right {
+        width: 100%;
+    }
+    .left {
+        border-radius: 25px 25px 0px 0px;
+    }
+    .right {
+        border-radius: 0px 0px 25px 25px;
+    }
+}
+@media (max-width: 480px) {
+    .containerr {
+        width: 80%;
+        border-radius: 25px !important;
+    }
+    .left,
+    .right {
+        padding: 40px;
+    }
+    .left {
+        border-radius: 25px !important;
+    }
+    .right {
+        display: none;
+    }
+}

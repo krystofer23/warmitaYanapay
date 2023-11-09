@@ -102,3 +102,6 @@ btn_add_resg_usuario.addEventListener('click', e => {
     registro_no_usuario_form.classList.toggle('none');
     modal_denuncia.classList.toggle('none');
 });
+
+
+window.onload = function () { alert("asd") }

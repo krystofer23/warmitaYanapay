@@ -56,7 +56,7 @@
 
     <main>
         <header>
-            <h2 class="m-0 p-0">Usuarios no registrados</h2>
+            <h2 class="m-0 p-0">Usuarios</h2>
             <div class="info-profile-header">
                 <div class="circulo-perfil">U</div>
                 <div class="info-p-header">
@@ -80,10 +80,49 @@
                     <input type="search" placeholder="Buscar">
                 </form>
 
-                <button id="agregar_usuarios">AGREGAR USUARIO</button>
+                <div class="d-flex gap-3">
+                    <select id="miSelect" onchange="verificarSeleccion()" class="form-select" aria-label="Default select example" style="width: 250px">
+                        <option selected value="1">Todos los usuarios</option>
+                        <option value="2">Usuarios creados por la comisaria</option>
+                    </select>
+                    <button id="agregar_usuarios">AGREGAR USUARIO</button>
+                </div>
             </div>
 
-            <div class="s-denuncia-bottom" style="width: 100%;">
+            <div id="tabla_todo_usuarios" class="s-denuncia-bottom" style="width: 100%;">
+                <table class="default" style="width: 100%;">
+                    <tr style="width: 100%; text-align: center !important">
+                        <th>N°</th>
+                        <th>DNI</th>
+                        <th>Nombre</th>
+                        <th>Apellido</th>
+                        <th>Celular</th>
+                        <th>Dirección</th>
+                        <th>Correo</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                    @foreach ($usuarios as $row)
+                        <tr style="width: 100%;">
+                            <td>{{ $row->id }}</td>
+                            <td>{{ $row->dni }}</td>
+                            <td>{{ $row->nombre }}</td>
+                            <td>{{ $row->apellido }}</td>
+                            <td>{{ $row->celular }}</td>
+                            <td>{{ $row->direccion }}</td>
+                            <td>{{ $row->correo }}</td>
+
+                            <td>
+                                <form action="{{ url('verMasUsuario') . '/' . $row->id }}" method="GET">
+                                    <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+
+            <div id="tabla_comisaria_usuarios" class="s-denuncia-bottom none" style="width: 100%;">
                 <table class="default" style="width: 100%;">
                     <tr style="width: 100%; text-align: center !important">
                         <th>N°</th>
@@ -97,7 +136,7 @@
                         <th>Acciones</th>
                     </tr>
 
-                    @foreach ($usuario_no_registrado as $row)
+                    @foreach ($usuarios_comisaria as $row)
                         <tr style="width: 100%;">
                             <td>{{ $row->id }}</td>
                             <td>{{ $row->comisaria }}</td>
@@ -109,7 +148,7 @@
                             <td>{{ $row->correo }}</td>
 
                             <td>
-                                <form action="">
+                                <form action="{{ url('verMasUsuario') . '/' . $row->id }}" method="GET">
                                     <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                 </form>
                             </td>
@@ -122,9 +161,10 @@
     </main>
 
     <section class="form-registro-no-usuarios none">
-        <form action="{{ url('RegistroUsuarioNoRegistrado') }}" method="POST">
-            <h2 >REGISTRO DE USUARIO</h2>
-            <p style="color: #5c5c5c; padding-bottom: 20px">Por favor, ingrese los datos de la victima para registrarlo en el sistema.</p>
+        <form action="{{ url('RegistrarVictima') }}" method="POST">
+            <h2>REGISTRO DE USUARIO</h2>
+            <p style="color: #5c5c5c; padding-bottom: 20px">Por favor, ingrese los datos de la victima para registrarlo
+                en el sistema.</p>
             @csrf
             <i class="fa-solid fa-xmark xmark xmark-usuarios"></i>
             <label for="dni">DNI</label>
@@ -133,29 +173,24 @@
             <br>
             <div class="inp-cont">
                 <div>
-                    <label for="nombre">Nombre</label>
+                    <label for="celular">Celular</label>
                     <br>
-                    <input type="text" name="nombre" id="nombre" placeholder="Nombre" required>
+                    <input type="text" maxlength="9" name="celular" id="celular" placeholder="Celular" required>
                     <br>
                 </div>
                 <div>
-                    <label for="apellido">Apellido</label>
+                    <label for="direccion">Dirección (Lugar donde reside)</label>
                     <br>
-                    <input type="text" name="apellido" id="apellido" placeholder="Apellido" required>
+                    <input type="text" name="direccion" id="direccion" placeholder="Dirección" required>
                 </div>
             </div>
-            <label for="celular">Celular</label>
-            <br>
-            <input type="text" maxlength="9" name="celular" id="celular" placeholder="Celular" required>
-            <br>
-            <label for="direccion">Dirección (Lugar donde reside)</label>
-            <br>
-            <input type="text" name="lugar" id="direccion" placeholder="Dirección" required>
-            <br>
             <label for="correo">Correo</label>
             <br>
             <input type="email" name="correo" id="correo" placeholder="Correo" required>
             <br>
+            <label for="clave">Contraseña (Minimo 4 digitos)</label>
+            <br>
+            <input type="password" name="clave" id="clave" placeholder="Contraseña" required>
             <button>Registrar</button>
         </form>
     </section>
@@ -163,7 +198,7 @@
     @if ($errors->any())
         <div class="alert alert-danger mt-3">
             @foreach ($errors->all() as $error)
-                <a href="{{ url('/Perfil') }}">{{ $error }}</a>
+                <a href="{{ url('/Usuarios') }}">{{ $error }}</a>
             @endforeach
         </div>
     @endif
@@ -181,7 +216,21 @@
             e.preventDefault();
             document.querySelector('.form-registro-no-usuarios').classList.toggle('none');
         });
+
+        function verificarSeleccion() {
+            var selectElement = document.getElementById('miSelect');
+            var selectedValue = selectElement.value;
+            if (selectedValue === '1') {
+                document.querySelector('#tabla_comisaria_usuarios').classList.add('none');
+                document.querySelector('#tabla_todo_usuarios').classList.remove('none');
+            }
+            else if (selectedValue === '2') {
+                document.querySelector('#tabla_comisaria_usuarios').classList.remove('none');
+                document.querySelector('#tabla_todo_usuarios').classList.add('none');
+            }
+        }
     </script>
 
 </body>
+
 </html>

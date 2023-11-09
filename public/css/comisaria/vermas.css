@@ -1,0 +1,92 @@
+
+@import url('./fonts.css');
+
+body {
+    font-family: Nunito Sans !important;
+}
+
+.container-ver-m-d {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    font-family: Gabarito !important;
+}
+
+.container-info-m-d {
+    max-width: 90%;
+    width: 1200px;
+    background-color: #fff;
+}
+
+.btn-edit-d {
+    padding: 10px 20px;
+    cursor: pointer;
+    background-color: #cdf463;
+    border: none;
+    color: #4a4747;
+    border-radius: 7px;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    transition: all .2s ease-in-out;
+    font-weight: bold;
+}
+
+.btn-primarys {
+    border: none;
+    border-radius: 7px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: #3459e6;
+    color: #fff;
+    padding: 10px 20px;
+    transition: all .2s ease-in-out;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.btn-primarys:hover {
+    background-color: #1d42d7;
+}
+
+.btn-edit-d:hover {
+    background-color: #bee948;
+}
+
+.text-area {
+    max-width: 99%;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+    resize: vertical;
+}
+
+.text-area:focus {
+    border: #cdf463 1px solid;
+    box-shadow: #f2f2f2 0 0 5px;
+}
+
+.inp-p {
+    max-width: 99%;
+    width: 100%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding: 8px 12px;
+    border-radius: 7px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all .2s linear;
+    color: #7f7f7f;
+}
+
+.inp-p:focus {
+    border: #cdf463 1px solid;
+    box-shadow: #f2f2f2 0 0 5px;
+}
+

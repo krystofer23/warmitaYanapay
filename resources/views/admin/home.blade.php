@@ -20,33 +20,48 @@
     <nav>
         <div class="nav-up">
             <img src="./img/Logo.png" alt="" class="img-logo">
-            <span>Warmita Yanapay Comisaria</span>
+            <span>Warmita Yanapay Dashboard</span>
         </div>
 
         <ul class="nav-down">
             <li class="li-active">
                 <i class="fa-solid fa-house"></i>
-                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/HomeA') }}">Inicio</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-bell"></i>
-                <a href="{{ url('Alertas') }}">Alertas</a>
+                <a href="{{ url('AlertaA') }}">Alertas</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-clipboard"></i>
-                <a href="{{ url('Denuncias') }}">Denuncias</a>
+                <a href="{{ url('DenunciasA') }}">Denuncias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('Usuarios') }}">Usuarios</a>
+                <a href="{{ url('') }}">Usuarios</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-building-flag"></i>
+                <a href="{{ url('') }}">Comisarias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-receipt"></i>
+                <a href="{{ url('') }}">Evidencias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-address-book"></i>
+                <a href="{{ url('') }}">Contactos</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-user"></i>
-                <a href="{{ url('Perfil') }}">Perfil</a>
+                <a href="{{ url('PerfilA') }}">Mi perfil</a>
             </li>
         </ul>
     </nav>
@@ -57,8 +72,8 @@
             <div class="info-profile-header">
                 <div class="circulo-perfil">U</div>
                 <div class="info-p-header">
-                    <p class="m-0">{{ $usuario_comisaria->nombre }}</p>
-                    <span>{{ $usuario_comisaria->correo }}</span>
+                    <p class="m-0">{{ $usuario->name }}</p>
+                    <span>{{ $usuario->email }}</span>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="cursor: pointer; padding-top: 1px">
                     <div class="cerrar_sesion">
@@ -82,9 +97,30 @@
                 </div>
                 <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
                     <p class="text-success d-flex align-items-center"><i class="fa-solid fa-clipboard me-3"></i> TOTAL DE DENUNCIAS
-                        <i title="Todas las denuncias registradas por tu comisaria." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                        <i title="Todas las denuncias registradas por las comisarias." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
                     </p>
                     <span class="text-success">{{ $denuncias_n }}</span>
+                </div>
+
+                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-building-flag me-3"></i> TOTAL DE COMISARIAS
+                        <i title="Todos las comisarias registradas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                    </p>
+                    <span class="text-info">{{ $comisarias_t }}</span>
+                </div>
+
+                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-address-book me-3"></i> TOTAL DE CONTACTOS
+                        <i title="Todos los contactos registrados por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                    </p>
+                    <span class="text-info">{{ $contactos_t }}</span>
+                </div>
+
+                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-receipt me-3"></i> TOTAL DE EVIDENCIAS
+                        <i title="Todas las evidencias registradas por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                    </p>
+                    <span class="text-info">{{ $evidencias_t }}</span>
                 </div>
             </div>
 
@@ -109,7 +145,7 @@
             </div>
 
             <div class="pt-4">
-                <h4 class="px-4 mb-3 d-flex align-items-center">Tus ultimas denuncias (24h) - N° {{ $denuncias_H }}<i title="Todas las denuncias hechas por tu comisaria en las ultimas 24 horas." style="cursor: pointer;"  class="fa-solid fa-circle-info ms-3"></i></h4>
+                <h4 class="px-4 mb-3 d-flex align-items-center">Ultimas denuncias (24h) - N° {{ $denuncias_H }}<i title="Todas las denuncias hechas por las comisaria en las ultimas 24 horas." style="cursor: pointer;"  class="fa-solid fa-circle-info ms-3"></i></h4>
 
                 <div class="s-denuncia-bottom">
                     <table class="default" style="width: 100%;" id="mis_denuncias">

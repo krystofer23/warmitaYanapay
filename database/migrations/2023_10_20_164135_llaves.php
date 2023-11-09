@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('llaves', function (Blueprint $table) {
             $table->id();
             $table->string('llave_acceso');
+            $table->string('status');
             $table->timestamps();
         });
     }

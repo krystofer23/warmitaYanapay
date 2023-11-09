@@ -11,14 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('evidencia', function (Blueprint $table) {
+        Schema::create('reporte_alertas', function (Blueprint $table) {
             $table->id();
+            $table->string('id_alerta');
             $table->string('id_victima');
-
-            $table->longText('descripcion');
-            $table->string('evidencia_media');
-            $table->longText('datos_agresor');
-
+            $table->string('status');
             $table->timestamps();
         });
     }
@@ -28,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('evidencia');
+        Schema::dropIfExists('reporte_alertas');
     }
 };

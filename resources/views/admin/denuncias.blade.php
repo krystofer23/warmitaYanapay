@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 
 <head>
     <meta charset="UTF-8">
@@ -19,37 +19,51 @@
 </head>
 
 <body>
-
     <nav>
         <div class="nav-up">
             <img src="./img/Logo.png" alt="" class="img-logo">
-            <span>Warmita Yanapay Comisaria</span>
+            <span>Warmita Yanapay Dashboard</span>
         </div>
 
         <ul class="nav-down">
             <li class="">
                 <i class="fa-solid fa-house"></i>
-                <a href="{{ url('/') }}">Inicio</a>
+                <a href="{{ url('/HomeA') }}">Inicio</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-bell"></i>
-                <a href="{{ url('Alertas') }}">Alertas</a>
+                <a href="{{ url('AlertaA') }}">Alertas</a>
             </li>
 
             <li class="li-active">
                 <i class="fa-solid fa-clipboard"></i>
-                <a href="{{ url('Denuncias') }}">Denuncias</a>
+                <a href="{{ url('DenunciasA') }}">Denuncias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('Usuarios') }}">Usuarios</a>
+                <a href="{{ url('') }}">Usuarios</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-building-flag"></i>
+                <a href="{{ url('') }}">Comisarias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-receipt"></i>
+                <a href="{{ url('') }}">Evidencias</a>
+            </li>
+
+            <li class="">
+                <i class="fa-solid fa-address-book"></i>
+                <a href="{{ url('') }}">Contactos</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-user"></i>
-                <a href="{{ url('Perfil') }}">Perfil</a>
+                <a href="{{ url('PerfilA') }}">Mi perfil</a>
             </li>
         </ul>
     </nav>
@@ -83,7 +97,6 @@
                 <div class="d-flex gap-3">
                     <select id="miSelect" onchange="verificarSeleccion()" class="form-select"
                         aria-label="Default select example" style="width: 250px">
-                        <option selected value="1">Mis denuncias</option>
                         <option value="2">Todas las denuncias</option>
                     </select>
                     <button id="agregar_usuarios">AGREGAR DENUNCIA</button>
@@ -91,7 +104,7 @@
             </div>
 
             <div class="s-denuncia-bottom">
-                <table class="default none" style="width: 100%;" id="denuncias">
+                <table class="default" style="width: 100%;" id="denuncias">
                     <tr style="width: 100%; text-align: center !important">
                         <th>N°</th>
                         <th>Lugar de denuncia (Comisaria)</th>
@@ -126,7 +139,7 @@
                     @endforeach
                 </table>
 
-                <table class="default" style="width: 100%;" id="mis_denuncias">
+                <table class="default none" style="width: 100%;" id="mis_denuncias">
                     <tr style="width: 100%; text-align: center !important">
                         <th>N°</th>
                         <th>DNI</th>
@@ -224,17 +237,17 @@
             document.querySelector('.form-registro-no-usuarios').classList.toggle('none');
         });
 
-        function verificarSeleccion() {
-            var selectElement = document.getElementById('miSelect');
-            var selectedValue = selectElement.value;
-            if (selectedValue === '1') {
-                document.querySelector('#denuncias').classList.add('none');
-                document.querySelector('#mis_denuncias').classList.remove('none');
-            } else if (selectedValue === '2') {
-                document.querySelector('#denuncias').classList.remove('none');
-                document.querySelector('#mis_denuncias').classList.add('none');
-            }
-        }
+        // function verificarSeleccion() {
+        //     var selectElement = document.getElementById('miSelect');
+        //     var selectedValue = selectElement.value;
+        //     if (selectedValue === '1') {
+        //         document.querySelector('#denuncias').classList.add('none');
+        //         document.querySelector('#mis_denuncias').classList.remove('none');
+        //     } else if (selectedValue === '2') {
+        //         // document.querySelector('#denuncias').classList.remove('none');
+        //         // document.querySelector('#mis_denuncias').classList.add('none');
+        //     }
+        // }
     </script>
 
 </body>

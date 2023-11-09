@@ -1,17 +1,28 @@
 <?php
 
+use App\Http\Controllers\AdministradorController;
+use App\Http\Controllers\AlertaController;
 use App\Http\Controllers\ComisariaController;
 use App\Http\Controllers\DenunciaController;
 use App\Http\Controllers\InicioSesionComisaria;
 use App\Http\Controllers\UsuarioComisariaController;
+use App\Http\Controllers\UsuarioController;
 use App\Http\Controllers\UsuarioNoRegistradoController;
 use App\Http\Controllers\VerMasController;
+use App\Models\Alerta;
 use App\Models\Denuncia;
+use App\Models\Llaves;
+use App\Models\ReporteAlertas;
 use App\Models\UsuarioComisaria;
 use App\Models\UsuarioNoRegistrado;
 use App\Models\UsuarioVictima;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Route;
+
+use function PHPUnit\Framework\returnValueMap;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,13 +62,6 @@ Route::controller(UsuarioComisariaController::class)->group(function () {
     Route::put('EditarClave/{id}', 'editar_clave');
     Route::delete('EliminarComisaria/{id}', 'eliminar_comisaria');
     
-});
-
-Route::controller(UsuarioNoRegistradoController::class)->group(function () {
-
-    Route::post('RegistroUsuarioNoRegistrado', 'registro_usuario_no_registrado');
-    Route::put('EditarUsuarioNoRegistrado/{id}', 'editar_usuario_no_registrado');
-
 });
 
 Route::controller(VerMasController::class)->group(function () {
@@ -121,6 +125,9 @@ Route::get('Inicio', function () {
     
 });
 
+
+// Web 
+
 Route::controller(ComisariaController::class)->group(function () {
 
     Route::get('/', 'home');
@@ -128,5 +135,74 @@ Route::controller(ComisariaController::class)->group(function () {
     Route::get('Denuncias', 'denuncias');
     Route::get('Usuarios', 'usuarios');
     Route::get('Perfil', 'perfil');
+
+    // Report de alertas
+    Route::get('ReporteDeAlertas', 'ReporteDeAlertas');
+
+});
+
+Route::controller(UsuarioController::class)->group(function () {
+
+    Route::post('RegistrarVictima', 'RegistrarVictima');
+    Route::put('ActualizarUsuario/{id}', 'ActualizarUsuario');
+    Route::put('ActualizarClave/{id}', 'ActualizarClave');
+    Route::delete('EliminarUsuario/{id}', 'EliminarUsuario');
+
+});
+
+Route::controller(VerMasController::class)->group(function () {
+
+    Route::get('verMasDenuncia/{id}', 'verMasDenuncia');
+    Route::get('verMasUsuario/{id}', 'verMasUsuario');
+
+});
+
+// Cambio 
+
+Route::put('ActualizarDenuncia/{id}', [VerMasController::class, 'ActualizarDenuncia']);
+Route::put('ActualizarUsuario/{id}', [VerMasController::class, 'ActualizarUsuario']);
+
+// Eliminar Alerta
+
+Route::delete('EliminarAlerta/{id}', function ($id) {
+
+    $alerta = Alerta::where('id_victima', $id)->get();
+    $r_alerta = ReporteAlertas::where('id_alerta', $alerta[0]->id);
+        $r_alerta->update([
+            'status' => '1'
+        ]);
+    $alerta = Alerta::where('id_victima', $id)->delete();
+
+    return redirect('Alertas');
+
+});
+
+// Link alert
+
+Route::get('alerta/users/{id}', [AlertaController::class, 'VerAlertaVictima']);
+
+// Admin
+
+Route::controller(AdministradorController::class)->group(function () {
+
+    Route::get('HomeA', 'home');
+    Route::get('PerfilA', 'perfil');
+    Route::get('AlertaA', 'alertas');
+    Route::get('DenunciasA', 'denuncias');
+    
+    Route::get('ReporteAlertaA', 'ReporteDeAlertas');
+
+});
+
+// LLaves
+
+Route::post('llavePOST', function (Request $request) {
+
+    Llaves::create([
+        'llave_acceso' => Crypt::encryptString($request->llave),
+        'status' => '1' // No ah iso usado
+    ]);
+
+    return redirect('PerfilA');
 
 });
