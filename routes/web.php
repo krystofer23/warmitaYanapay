@@ -186,11 +186,38 @@ Route::get('alerta/users/{id}', [AlertaController::class, 'VerAlertaVictima']);
 Route::controller(AdministradorController::class)->group(function () {
 
     Route::get('HomeA', 'home');
-    Route::get('PerfilA', 'perfil');
     Route::get('AlertaA', 'alertas');
     Route::get('DenunciasA', 'denuncias');
     
+    // Alertas
     Route::get('ReporteAlertaA', 'ReporteDeAlertas');
+    Route::delete('eliminarReporteAlerta/{id}', 'eliminarReporteAlerta');
+
+    // Denuncias
+    Route::get('verMasDenunciaA/{id}', 'verMasDenunciaA');
+    Route::put('ActualizarDenunciaA/{id}', 'ActualizarDenunciaA');
+
+    // Usuarios
+    Route::get('UsuariosA', 'Usuarios');
+    Route::get('verMasUsuarioA/{id}', 'verMasUsuario');
+
+    // Comisarias
+
+    // Evidencias
+
+    // Contactos
+    Route::get('ContactosA', 'Contactos');
+    Route::post('AgregarContacto', 'AgregarContacto');
+    Route::put('EditarContacto/{id}', 'EditarContacto');
+    Route::delete('EliminarContacto/{id}', 'EliminarContacto');
+
+    Route::get('verMasContacto/{id}', 'verMasContacto');
+
+    // Perfil
+    Route::get('PerfilA', 'perfil');
+    Route::put('EditarPerfilAdmin/{id}', 'EditarPerfilAdmin');
+    Route::put('EditarContrasenaAdmin/{id}', 'EditarContrasenaAdmin');
+    Route::delete('EliminarLlave/{id}', 'EliminarLlave');
 
 });
 

@@ -44,22 +44,22 @@
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('') }}">Usuarios</a>
+                <a href="{{ url('UsuariosA') }}">Usuarios</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a href="{{ url('') }}">Comisarias</a>
+                <a>Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a href="{{ url('') }}">Evidencias</a>
+                <a>Evidencias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-address-book"></i>
-                <a href="{{ url('') }}">Contactos</a>
+                <a href="{{ url('ContactosA') }}">Contactos</a>
             </li>
 
             <li class="">

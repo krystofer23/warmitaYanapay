@@ -89,12 +89,14 @@
                         @else
                             <td>Por atender</td>
                         @endif
-                        <td>
-                            <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
-                                <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
+                        <td class="">
+                            <form action="{{ url('verMasUsuarioA') . '/' . $row->id_victima }}" method="GET">
+                                <button class="btn btn-warning fs-7 px-3 py-2">Ver información de la victima</button>
                             </form>
-                            <form action="{{ url('') . '/'  }}" method="GET">
-                                <button class="btn btn-warning fs-7 px-3 py-2 border">Eliminar</button>
+                            <form action="{{ url('eliminarReporteAlerta') . '/' . $row->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger fs-7 px-3 py-2 mt-1">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -116,9 +118,14 @@
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->dni }}</td>
                         <td style="text-align: center !important;" class="px-4">{{ $row->created_at }}</td>
-                        <td>
-                            <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
-                                <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
+                        <td class="">
+                            <form action="{{ url('verMasUsuarioA') . '/' . $row->id_victima }}" method="GET">
+                                <button class="btn btn-warning fs-7 px-3 py-2">Ver información de la victima</button>
+                            </form>
+                            <form action="{{ url('eliminarReporteAlerta') . '/' . $row->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger fs-7 px-3 py-2 mt-1">Eliminar</button>
                             </form>
                         </td>
                     </tr>
@@ -140,9 +147,14 @@
                         <td>{{ $row->id }}</td>
                         <td>{{ $row->dni }}</td>
                         <td style="text-align: center !important;" class="px-4">{{ $row->created_at }}</td>
-                        <td>
-                            <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
-                                <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
+                        <td class="">
+                            <form action="{{ url('verMasUsuarioA') . '/' . $row->id_victima }}" method="GET">
+                                <button class="btn btn-warning fs-7 px-3 py-2">Ver información de la victima</button>
+                            </form>
+                            <form action="{{ url('eliminarReporteAlerta') . '/' . $row->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button class="btn btn-danger fs-7 px-3 py-2 mt-1">Eliminar</button>
                             </form>
                         </td>
                     </tr>

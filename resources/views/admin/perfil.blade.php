@@ -40,22 +40,22 @@
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('') }}">Usuarios</a>
+                <a href="{{ url('UsuariosA') }}">Usuarios</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a href="{{ url('') }}">Comisarias</a>
+                <article>Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a href="{{ url('') }}">Evidencias</a>
+                <a>Evidencias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-address-book"></i>
-                <a href="{{ url('') }}">Contactos</a>
+                <a href="{{ url('ContactosA') }}">Contactos</a>
             </li>
 
             <li class="li-active">
@@ -87,7 +87,7 @@
 
         <section class="sec-denuncias" id="form-perfil">
 
-            <form action="{{ url('EditarComisaria') . '/' . $usuario->id }}" method="POST">
+            <form action="{{ url('EditarPerfilAdmin') . '/' . $usuario->id }}" method="POST">
                 @csrf
                 @method('PUT')
                 
@@ -97,11 +97,11 @@
 
                 <label for="nombre">Nombre</label>
                 <br>
-                <input name="nombre" id="nombre" type="text" value="{{ $usuario->name }}">
+                <input name="name" id="nombre" type="text" value="{{ $usuario->name }}">
                 <br>
                 <label for="correo">Correo</label>
                 <br>
-                <input name="correo" id="correo" type="email" value="{{ $usuario->email }}">
+                <input name="email" id="correo" type="email" value="{{ $usuario->email }}">
                 <br>
                 <button>Guardar</button>
 
@@ -162,7 +162,9 @@
                             <td>Ya ah sido usado</td>
                         @endif
                         <td>
-                            <form action="">
+                            <form action="{{ url('EliminarLlave') . '/' . $row->id}}" method="POST">
+                                @csrf
+                                @method('DELETE')
                                 <button style="background: #da292e">Eliminar</button>
                             </form>
                         </td>
@@ -175,14 +177,14 @@
     </main>
 
     <section class="form-cambio-clave none">
-        <form action="{{ url('') . '/' . $usuario->id }}" class="form-clave" method="POST">
+        <form action="{{ url('EditarContrasenaAdmin') . '/' . $usuario->id }}" class="form-clave" method="POST">
             @csrf
             @method('PUT')
             <i class="fa-solid fa-xmark xmark"></i>
 
             <label for="clave">Contraseña</label>
             <br>
-            <input name="clave" id="clave" type="text" placeholder="Contraseña" required>
+            <input name="password" id="clave" type="text" placeholder="Contraseña" required>
 
             <br>
             <button>Guardar</button>

@@ -17,10 +17,7 @@ class EvidenciaController extends Controller
 
         $evidencias = Evidencia::where('id_victima', $request->id)->get();
 
-        return response()->json([
-            'status' => 'success',
-            'evidencias' => $evidencias,
-        ], Response::HTTP_OK);
+        return $evidencias;
     }
 
     public function store (Request $request) 
@@ -29,7 +26,7 @@ class EvidenciaController extends Controller
             $this->validate($request, [
                 'id_victima' => 'required',
                 'descripcion' => 'required',
-                'evidencia_media' => '',
+                'file' => '',
                 'datos_agresor' => 'required',
             ]);
 
@@ -50,8 +47,8 @@ class EvidenciaController extends Controller
 
             curl_close($ch);
     
-            if ($request->hasFile('evidencia_media')) {
-                $image = $request->file('evidencia_media');
+            if ($request->hasFile('file')) {
+                $image = $request->file('file');
                 $imageName = time() . '.' . $image->getClientOriginalExtension();
                 $image->move('images', $imageName);
                 

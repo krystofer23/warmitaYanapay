@@ -41,7 +41,7 @@
 
             <li class="">
                 <i class="fa-solid fa-users"></i>
-                <a href="{{ url('') }}">Usuarios</a>
+                <a href="{{ url('UsuariosA') }}">Usuarios</a>
             </li>
 
             <li class="">
@@ -56,7 +56,7 @@
 
             <li class="">
                 <i class="fa-solid fa-address-book"></i>
-                <a href="{{ url('') }}">Contactos</a>
+                <a href="{{ url('ContactosA') }}">Contactos</a>
             </li>
 
             <li class="">
@@ -167,13 +167,13 @@
                                     <td>No hay pruebas</td>
                                 @endif
                                 <td>
-                                    <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
-                                        <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
+                                    <form action="{{ url('verMasDenunciaA') . '/' . $row->id }}" method="GET">
+                                        <button style="background: #f4bd61;">Ver más</button>
                                     </form>
                                     <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
-                                        <button style="background: #da292e">Eliminar</button>
+                                        <button style="background: #da292e" class="mt-1">Eliminar</button>
                                     </form>
                                 </td>
                             </tr>
