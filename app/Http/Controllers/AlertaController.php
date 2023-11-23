@@ -10,9 +10,14 @@ use Illuminate\Http\Request;
 class AlertaController extends Controller
 {
     public function VerAlertaVictima ($id) {
-        $alerta = Alerta::find($id);
-        $victima = UsuarioVictima::find($alerta->id_victima);
+        try {
+            $alerta = Alerta::find($id);
+            $victima = UsuarioVictima::find($alerta->id_victima);
 
-        return view('alerta/alerta', ['alertas' => $alerta, 'victimas' => $victima]);
+            return view('alerta/alerta', ['alertas' => $alerta, 'victimas' => $victima]);
+        }
+        catch (\Exception $e) {
+            return redirect('https://www.google.com');
+        }
     }
 }

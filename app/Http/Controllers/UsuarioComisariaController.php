@@ -26,7 +26,7 @@ class UsuarioComisariaController extends Controller
                 'correo' => $request->correo
             ]);
 
-            return redirect('/Perfil');
+            return redirect('/Perfil')->withErrors(['error' => 'success']);
         }
         catch (Exception $e) {
             return redirect('/Perfil')->withErrors(['error' => 'Hubo un error al actualizar los datos.']);
@@ -46,7 +46,7 @@ class UsuarioComisariaController extends Controller
                 'clave' => Hash::make($request->clave)
             ]);
 
-            return redirect('/Perfil');
+            return redirect('/Perfil')->withErrors(['error' => 'success']);
         }
         catch (Exception $e) {
             return redirect('/Perfil')->withErrors(['error' => 'Hubo un error al actualizar los datos.']);

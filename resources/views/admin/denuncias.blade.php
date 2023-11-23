@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -48,12 +48,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a>Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a>Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="">
@@ -74,8 +74,8 @@
             <div class="info-profile-header">
                 <div class="circulo-perfil">U</div>
                 <div class="info-p-header">
-                    <p class="m-0">{{ $usuario_comisaria->nombre }}</p>
-                    <span>{{ $usuario_comisaria->correo }}</span>
+                    <p class="m-0">{{ $usuario_comisaria->name }}</p>
+                    <span>{{ $usuario_comisaria->email }}</span>
                 </div>
                 <i class="fa-solid fa-chevron-down" style="cursor: pointer; padding-top: 1px">
                     <div class="cerrar_sesion">
@@ -90,8 +90,9 @@
 
         <section class="sec-denuncias">
             <div class="s-denuncia-top">
-                <form action="">
-                    <input type="search" placeholder="Buscar">
+                <form action="{{ url('BuscarUsuarioD') }}" method="POST">
+                    @csrf
+                    <input maxlength="8" name="dni" type="search" placeholder="Buscar">
                 </form>
 
                 <div class="d-flex gap-3">
@@ -99,22 +100,24 @@
                         aria-label="Default select example" style="width: 250px">
                         <option value="2">Todas las denuncias</option>
                     </select>
-                    <button id="agregar_usuarios">AGREGAR DENUNCIA</button>
                 </div>
             </div>
 
             <div class="s-denuncia-bottom">
                 <table class="default" style="width: 100%;" id="denuncias">
-                    <tr style="width: 100%; text-align: center !important">
-                        <th>N°</th>
-                        <th>Lugar de denuncia (Comisaria)</th>
-                        <th>DNI</th>
-                        <th>Descripción</th>
-                        <th>Prueba</th>
-                        <th>Acciónes</th>
-                    </tr>
+                    <thead>
+                        <tr style="width: 100%; text-align: center !important">
+                            <th style="cursor: pointer" onclick="ordenarColumna(0)">N° <i id="btn_y" class="ms-1 mt-1 fa-solid fa-arrow-up" style="display: inline-block"></i></th>
+                            <th>Lugar de denuncia (Comisaria)</th>
+                            <th>DNI</th>
+                            <th>Descripción</th>
+                            <th>Prueba</th>
+                            <th>Acciónes</th>
+                        </tr>
+                    </thead>
 
-                    @foreach ($denuncias as $row)
+                    <tbody>
+                        @foreach ($denuncias as $row)
                         <tr style="width: 100%;">
                             <td>{{ $row->id }}</td>
                             <td>{{ $row->id_comisaria }}</td>
@@ -126,10 +129,10 @@
                                 <td>No hay pruebas</td>
                             @endif
                             <td>
-                                <form action="{{ url('verMasDenunciaA') . '/' . $row->id }}" method="GET">
+                                <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
                                     <button style="background: #f4bd61;">Ver más</button>
                                 </form>
-                                <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
+                                <form action="{{ url('EliminarDenunciaA/' . $row->id) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button style="background: #da292e" class="mt-1">Eliminar</button>
@@ -137,39 +140,7 @@
                             </td>
                         </tr>
                     @endforeach
-                </table>
-
-                <table class="default none" style="width: 100%;" id="mis_denuncias">
-                    <tr style="width: 100%; text-align: center !important">
-                        <th>N°</th>
-                        <th>DNI</th>
-                        <th>Descripción</th>
-                        <th>Prueba</th>
-                        <th>Acciónes</th>
-                    </tr>
-
-                    @foreach ($mis_denuncias as $row)
-                        <tr style="width: 100%;">
-                            <td>{{ $row->id }}</td>
-                            <td>{{ $row->id_victima }}</td>
-                            <td style="text-align: start !important;" class="px-4">{{ $row->descripcion }}</td>
-                            @if ($row->prueba_media != null)
-                                <td><a href="{{ $row->prueba_media }}" target="_blank">Ver prueba</a></td>
-                            @else
-                                <td>No hay pruebas</td>
-                            @endif
-                            <td>
-                                <form action="{{ url('verMasDenunciaA') . '/' . $row->id }}" method="GET">
-                                    <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
-                                </form>
-                                <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button style="background: #da292e">Eliminar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
+                    </tbody>
                 </table>
             </div>
 
@@ -215,13 +186,62 @@
         </form>
     </section>
 
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            @foreach ($errors->all() as $error)
-                <a href="{{ url('/Denuncias') }}">{{ $error }}</a>
-            @endforeach
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/DenunciasA') }}">Alerta desactivada</a>
         </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/DenunciasA') }}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
     @endif
+
+    <script>
+        let ordenAscendente = true;
+        let columnaActual = 0;
+
+        const tbody = document.querySelector("#denuncias tbody");
+      
+        function ordenarTabla() {
+            const filas = Array.from(tbody.querySelectorAll("tr"));
+        
+            filas.sort((a, b) => {
+                const valorA = a.children[columnaActual].textContent.trim();
+                const valorB = b.children[columnaActual].textContent.trim();
+        
+                if (!isNaN(valorA) && !isNaN(valorB)) {
+                return ordenAscendente ? valorA - valorB : valorB - valorA;
+                } else {
+                return ordenAscendente
+                    ? valorA.localeCompare(valorB)
+                    : valorB.localeCompare(valorA);
+                }
+            });
+        
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+        
+            filas.forEach((fila) => {
+                tbody.appendChild(fila);
+            });
+        
+            ordenAscendente = !ordenAscendente;
+            document.querySelector('#btn_y').classList.toggle('fa-arrow-up');
+            document.querySelector('#btn_y').classList.toggle('fa-arrow-down');
+        }
+      
+        function ordenarColumna(index) {
+            columnaActual = index;
+            ordenarTabla();
+        }
+
+        ordenarTabla();
+    </script>
 
     <script>
         const btn_cambio_clave = document.querySelector('#agregar_usuarios');
@@ -236,18 +256,6 @@
             e.preventDefault();
             document.querySelector('.form-registro-no-usuarios').classList.toggle('none');
         });
-
-        // function verificarSeleccion() {
-        //     var selectElement = document.getElementById('miSelect');
-        //     var selectedValue = selectElement.value;
-        //     if (selectedValue === '1') {
-        //         document.querySelector('#denuncias').classList.add('none');
-        //         document.querySelector('#mis_denuncias').classList.remove('none');
-        //     } else if (selectedValue === '2') {
-        //         // document.querySelector('#denuncias').classList.remove('none');
-        //         // document.querySelector('#mis_denuncias').classList.add('none');
-        //     }
-        // }
     </script>
 
 </body>

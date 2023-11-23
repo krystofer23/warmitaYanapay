@@ -76,8 +76,10 @@
 
         <section class="sec-denuncias">
             <div class="s-denuncia-top">
-                <form action="">
-                    <input type="search" placeholder="Buscar">
+                <form action="{{ url('BuscarUsuarioU') }}" method="POST" class="d-flex align-items-center">
+                    @csrf
+                    <input type="search" placeholder="Buscar" maxlength="8" name="dni">
+                    <i title="Ingrese el dni para poder buscar." style="cursor: pointer" class="fs-4 fa-solid fa-circle-info ms-3"></i>
                 </form>
 
                 <div class="d-flex gap-3">
@@ -114,6 +116,7 @@
                             @endif
                             <td>
                                 <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
+                                    <input type="text" name="page" class="none" value="Denuncias/">
                                     <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                 </form>
                                 <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
@@ -147,6 +150,7 @@
                             @endif
                             <td>
                                 <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
+                                    <input type="text" name="page" class="none" value="Denuncias/">
                                     <button style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                 </form>
                                 <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
@@ -202,12 +206,22 @@
         </form>
     </section>
 
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            @foreach ($errors->all() as $error)
-                <a href="{{ url('/Denuncias') }}">{{ $error }}</a>
-            @endforeach
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/Denuncias')}}">Denuncia eliminada</a>
         </div>
+        @elseif ($error == "successs")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/Denuncias')}}">Denuncia registrada</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/Denuncias')}}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
     @endif
 
     <script>

@@ -27,7 +27,7 @@
             <div class="border-bottom px-4 d-flex justify-content-between align-items-center">
                 <div class="d-flex gap-3 align-items-center">
                     <img src="../img/Logo.png" alt="" style="height: 80px">
-                    <h3 class="m-0">Información de la denuncia</h3>
+                    <h3 class="m-0">Información del usuario</h3>
                 </div>
                 <span>Fecha de registro: 2023-10-30 18:12:47</span>
             </div>
@@ -51,7 +51,7 @@
                         </div>
                     </div>
 
-                    <form action="{{ url('ActualizarUsuario') . '/' . $usuario->id }}" method="POST">
+                    <form action="{{ url('ActualizarUsuarioA') . '/' . $usuario->id }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="w-100">
@@ -86,16 +86,17 @@
                             @foreach ($denuncias as $row)
                                 <tr class="default text-center" style="width: 100%;">
                                     <td>{{ $row->id }}</td>
-                                    <td>{{ $row->id_comisaria }}</td>
+                                    <td>{{ $comisaria[($row->id_comisaria) - 1]->nombre }}</td>
                                     <td>{{ $row->created_at }}</td>
                                     <td>
                                         <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
                                             <button class=" btn btn-warning px-3 py-2"
                                                 style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                         </form>
-                                        <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
+                                        <form action="{{ url('EliminarDenunciaMas') . '/' . $row->id }}" method="POST">
                                             @csrf
                                             @method('DELETE')
+                                            <input type="text" class="none" name="user" value="{{ $usuario->id }}">
                                             <button class="btn btn-danger px-3 py-2"
                                                 style="background: #da292e">Eliminar</button>
                                         </form>
@@ -113,6 +114,7 @@
                                 <th>N°</th>
                                 <th>Descripción</th>
                                 <th>Datos del agresor</th>
+                                <th>Evidencia</th>
                                 <th>Acciones</th>
                             </tr>
                             @foreach ($evidencias as $row)
@@ -120,16 +122,17 @@
                                     <td>{{ $row->id }}</td>
                                     <td>{{ $row->descripcion }}</td>
                                     <td>{{ $row->datos_agresor }}</td>
+                                    @if($row->evidencia_media == '')
+                                    <th>No hay evidencia</th>
+                                    @else
+                                    <th><a href="{{ $row->evidencia_media }}" target="_BLANK">Ver evidencia</a></th>
+                                    @endif
                                     <td>
-                                        <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
-                                            <button class=" btn btn-warning px-3 py-2"
-                                                style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
-                                        </form>
-                                        <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
+                                        <form action="{{ url('EliminarEvidenciaEE/' . $row->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button class="btn btn-danger px-3 py-2"
-                                                style="background: #da292e">Eliminar</button>
+                                            <input type="text" class="none" name="id" value="{{ $usuario->id }}">
+                                            <button class="btn btn-danger px-3 py-2" style="background: #da292e">Eliminar</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -157,13 +160,14 @@
                                     <td>{{ $row->celular }}</td>
                                     <td>{{ $row->direccion }}</td>
                                     <td>
-                                        <form action="{{ url('') . '/' . $row->id }}" method="GET">
+                                        <form action="{{ url('verMasContacto') . '/' . $row->id }}" method="GET">
                                             <button class=" btn btn-warning px-3 py-2"
                                                 style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                         </form>
-                                        <form action="{{ url('/' . $row->id) }}" method="POST">
+                                        <form action="{{ url('EliminarContactoV/' . $row->id) }}" method="POST">
                                             @csrf
                                             @method('DELETE')
+                                            <input type="text" name="id" value="{{ $usuario->id }}" class="none">
                                             <button class="btn btn-danger px-3 py-2"
                                                 style="background: #da292e">Eliminar</button>
                                         </form>
@@ -177,10 +181,41 @@
         </div>
         <div class="py-3 d-flex justify-content-end container-info-m-d" style="background-color: #00000000 !important">
             <button class="btn btn-secondary" onclick="imprimir()">Imprimir</button>
-        
-            <a href="{{ url('UsuariosA') }}" class="ms-2 btn-primarys">Volver</a>
+            <button class="ms-2 btn-primarys" onclick="goBack()">Volver</button>
         </div>
     </div>
+
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a>Usuario actualizado</a>
+        </div>
+        @elseif($error == "successs")
+        <div class="alert alert-success mt-3">
+            <a>Denuncia eliminada</a>
+        </div>
+        @elseif($error == "successss")
+        <div class="alert alert-success mt-3">
+            <a>Contacto eliminada</a>
+        </div>
+        @elseif($error == "successw")
+        <div class="alert alert-success mt-3">
+            <a>Evidencia eliminada</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a>{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
+    @endif
+
+    <script>
+        function goBack(e) {
+            window.history.back();
+        }
+    </script>
 
     <script>
         function imprimir() {

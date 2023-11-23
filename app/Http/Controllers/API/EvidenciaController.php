@@ -108,4 +108,44 @@ class EvidenciaController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
     }
+
+    public function update (Request $request) 
+    {
+        if ($request->hasFile('file')) {
+            $image = $request->file('file');
+            $imageName = time() . '.' . $image->getClientOriginalExtension();
+            $image->move('images', $imageName);
+            
+            $evidencia = Evidencia::find($request->id);
+            $evidencia->update([
+                'descripcion' => $request->descripcion,
+                'evidencia_media' => '/images/' . $imageName,
+                'datos_agresor' => $request-> datos_agresor
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Evidencia actualizado con exito.'
+            ], Response::HTTP_CREATED);
+        }
+        else {
+            $evidencia = Evidencia::find($request->id);
+            $evidencia->update([
+                'descripcion' => $request->descripcion,
+                'evidencia_media' => '',
+                'datos_agresor' => $request-> datos_agresor
+            ]);
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Evidencia actualizado con exito.'
+            ], Response::HTTP_CREATED);
+        }
+    }
+
+    public function getEvidence (Request $request)
+    {
+        $detalle_contacto = Evidencia::find($request->id);
+        return $detalle_contacto;
+    }
 }

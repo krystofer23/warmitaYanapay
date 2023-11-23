@@ -46,12 +46,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a href="{{ url('') }}">Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a href="{{ url('') }}">Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="">
@@ -65,7 +65,6 @@
             </li>
         </ul>
     </nav>
-
     <main>
         <header>
             <h2 class="m-0 p-0">Inicio</h2>
@@ -88,63 +87,49 @@
 
         <section class="sec-home">
 
-            <div class="px-4 pt-3 d-flex gap-3 flex-wrap">
-                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-users me-3"></i> TOTAL DE USUARIOS
-                        <i title="Todos los usuarios registrados." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
-                    </p>
-                    <span class="text-info">{{ $usuarios }}</span>
-                </div>
-                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                    <p class="text-success d-flex align-items-center"><i class="fa-solid fa-clipboard me-3"></i> TOTAL DE DENUNCIAS
-                        <i title="Todas las denuncias registradas por las comisarias." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
-                    </p>
-                    <span class="text-success">{{ $denuncias_n }}</span>
+            <div class="d-flex gap-3 px-4 justify-content-center flex-wrap" style="">
+                <div style="height: 500px" class="pt-3">
+                    <canvas id="myChart" class="bg-white px-3 border rounded-3" style="box-shadow: 0px 0px 8px rgba(0, 0, 0, .1); width: 500px !important; height: 500px"></canvas>
                 </div>
 
-                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-building-flag me-3"></i> TOTAL DE COMISARIAS
-                        <i title="Todos las comisarias registradas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
-                    </p>
-                    <span class="text-info">{{ $comisarias_t }}</span>
-                </div>
-
-                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-address-book me-3"></i> TOTAL DE CONTACTOS
-                        <i title="Todos los contactos registrados por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
-                    </p>
-                    <span class="text-info">{{ $contactos_t }}</span>
-                </div>
-
-                <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                    <p class="text-info d-flex align-items-center"><i class="fa-solid fa-receipt me-3"></i> TOTAL DE EVIDENCIAS
-                        <i title="Todas las evidencias registradas por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
-                    </p>
-                    <span class="text-info">{{ $evidencias_t }}</span>
-                </div>
-            </div>
-
-            <div class="px-4 pt-3">
-                <div class="d-flex gap-3 flex-wrap">
-                    <div  class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                        <p class="text-success d-flex align-items-center"><i class="fa-solid fa-bell me-2 text-success"></i> ALERTAS ATENDIDAS <i style="cursor: pointer" title="Todas las alertas atendias por las comisaria." class="fa-solid fa-circle-info ms-3"></i></p>
-                        <span class="text-success">{{ $alertas_atendidas }}</span>
-                        {{-- <span class="text-black">{{ $denuncias_n }}</span> --}}
-                    </div>
-                    <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                        <p class="text-danger d-flex align-items-center"><i class="fa-solid fa-bell me-2 text-danger"></i> ALERTAS POR ATENDER <i title="Alertas por atender por las comisarias." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i></p>
-                        <span class="text-danger">{{ $alertas_no_atendidas }}</span>
-                    </div>
-                    <div class="box-inf p-4" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
-                        <p class="text-danger d-flex align-items-center"><i class="fa-solid fa-bell me-2"></i> TOTAL DE ALERTAS
-                            <i title="Todas las aletas hechas por los usuarios, incluidas las atendias y por las que falta atender." style="cursor: pointer;"  class="fa-solid fa-circle-info ms-3"></i>
+                <div style="flex: 1;" class="pt-3 d-flex gap-3 justify-content-start h-100 mb-3 flex-wrap">
+                    <div class="box-inf p-4 w-30" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                        <p class="text-info d-flex align-items-center"><i class="fa-solid fa-users me-3"></i> TOTAL DE USUARIOS
+                            <i title="Todos los usuarios registrados." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
                         </p>
-                        <span class="text-danger">{{ $total_alertas }}</span>
+                        <span class="text-info">{{ $usuarios }}</span>
+                    </div>
+                    <div class="box-inf p-4 w-30" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                        <p class="text-success d-flex align-items-center"><i class="fa-solid fa-clipboard me-3"></i> TOTAL DE DENUNCIAS
+                            <i title="Todas las denuncias registradas por las comisarias." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                        </p>
+                        <span class="text-success">{{ $denuncias_n }}</span>
+                    </div>
+    
+                    <div class="box-inf p-4 w-30" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                        <p class="text-info d-flex align-items-center"><i class="fa-solid fa-building-flag me-3"></i> TOTAL DE COMISARIAS
+                            <i title="Todos las comisarias registradas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                        </p>
+                        <span class="text-info">{{ $comisarias_t }}</span>
+                    </div>
+    
+                    <div class="box-inf p-4 w-30" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                        <p class="text-info d-flex align-items-center"><i class="fa-solid fa-address-book me-3"></i> TOTAL DE CONTACTOS
+                            <i title="Todos los contactos registrados por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                        </p>
+                        <span class="text-info">{{ $contactos_t }}</span>
+                    </div>
+    
+                    <div class="box-inf p-4 w-30" style="background-color: #fff; box-shadow: 0px 0px 8px rgba(0, 0, 0, .1)">
+                        <p class="text-info d-flex align-items-center"><i class="fa-solid fa-receipt me-3"></i> TOTAL DE EVIDENCIAS
+                            <i title="Todas las evidencias registradas por las victimas." style="cursor: pointer" class="fa-solid fa-circle-info ms-3"></i>
+                        </p>
+                        <span class="text-info">{{ $evidencias_t }}</span>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-4 mt-1">
                 <h4 class="px-4 mb-3 d-flex align-items-center">Ultimas denuncias (24h) - N° {{ $denuncias_H }}<i title="Todas las denuncias hechas por las comisaria en las ultimas 24 horas." style="cursor: pointer;"  class="fa-solid fa-circle-info ms-3"></i></h4>
 
                 <div class="s-denuncia-bottom">
@@ -167,10 +152,10 @@
                                     <td>No hay pruebas</td>
                                 @endif
                                 <td>
-                                    <form action="{{ url('verMasDenunciaA') . '/' . $row->id }}" method="GET">
+                                    <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
                                         <button style="background: #f4bd61;">Ver más</button>
                                     </form>
-                                    <form action="{{ url('EliminarDenuncia/' . $row->id) }}" method="POST">
+                                    <form action="{{ url('EliminarDenunciaAH/' . $row->id) }}" method="POST">
                                         @csrf
                                         @method('DELETE')
                                         <button style="background: #da292e" class="mt-1">Eliminar</button>
@@ -184,6 +169,58 @@
 
         </section>
     </main>
+
+    
+    @if ($errors->any())
+        @foreach ($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/HomeA') }}">Denuncia eliminada</a>
+        </div>
+        @else
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/HomeA') }}">{{ $error }}</a>
+        </div>
+        @endif
+        @endforeach
+    @endif
+
+    <style>
+        @media (max-width: 1428px) {
+            .box-inf {
+                padding-top: 15px !important;
+                width: 250px !important;
+            }
+        }
+        @media (max-width: 1336px) {
+            .box-inf {
+                flex: 1 !important;
+                width: 250px !important;
+            }
+        }
+    </style>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        const ctx = document.getElementById('myChart');
+
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['Total de alertas: ' + {{$total_alertas}}, 'Atendidas: ' + {{$alertas_atendidas}}, 'Por atender: ' + {{$alertas_no_atendidas}}],
+            datasets: [{
+              label: 'Alertas',
+              data: [{{$total_alertas}}, {{$alertas_atendidas}}, {{$alertas_no_atendidas}}],
+              backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(75, 192, 192, 0.2)',
+                'rgba(255, 99, 132, 0.2)'
+            ],
+              borderWidth: 1
+            }]
+          },
+        });
+    </script>
 
 </body>
 </html>

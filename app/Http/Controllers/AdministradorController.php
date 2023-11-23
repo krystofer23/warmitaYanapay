@@ -13,6 +13,7 @@ use App\Models\User;
 use App\Models\UsuarioComisaria;
 use App\Models\UsuarioCreadoComisaria;
 use App\Models\UsuarioVictima;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Contracts\Encryption\DecryptException;
 use Illuminate\Contracts\Encryption\EncryptException;
@@ -279,14 +280,34 @@ class AdministradorController extends Controller
     }
 
     // Inicio
+    
+    public function EliminarDenunciaAH ($id) 
+    {
+        $denuncia = Denuncia::find($id);
+        $denuncia->delete();
+
+        return redirect('HomeA')->withErrors(['error' => 'success']);
+    }
 
     // Alertas
+    public function desacrivarAlerta ($id) 
+    {
+        $alerta = Alerta::where('id_victima', $id)->get();
+        $r_alerta = ReporteAlertas::where('id_alerta', $alerta[0]->id);
+        $r_alerta->update([
+            'status' => '1'
+        ]);
+        $alerta = Alerta::where('id_victima', $id)->delete();
+    
+        return redirect('AlertaA')->withErrors(['error' => 'success']);
+    }
+
     public function eliminarReporteAlerta ($id) 
     {   
         $reporte_alerta = ReporteAlertas::find($id);
         $reporte_alerta->delete();
 
-        return redirect('ReporteAlertaA');
+        return redirect('ReporteAlertaA')->withErrors(['error' => 'success']);
     }
 
     // Denuncias
@@ -299,6 +320,14 @@ class AdministradorController extends Controller
         ]);
 
         return redirect('verMasDenunciaA/' . $id);
+    }
+
+    public function EliminarDenunciaA ($id) 
+    {
+        $denuncia = Denuncia::find($id);
+        $denuncia->delete();
+
+        return redirect('/DenunciasA')->withErrors(['error' => 'success']);
     }
 
     public function verMasDenunciaA ($id) 
@@ -417,12 +446,57 @@ class AdministradorController extends Controller
             'contactos' => $detalle_contactos,
             'denuncias' => $denuncias,
 
-
+            'comisaria' => UsuarioComisaria::get(),
 
             't_evidencias' =>  Evidencia::where('id_victima', $usuario->dni)->count(),
             't_contactos' =>  Contactos::where('id_victima', $usuario->id)->count(),
             't_denuncias' =>  Denuncia::where('id_victima', $usuario->dni)->count(),
         ]);
+    }
+
+    public function ActualizarUsuarioA (Request $request, $id)
+    {
+        try {
+            $usuario = UsuarioVictima::find($id);
+
+            $usuario->update([
+                'celular' => $request->celular,
+                'direccion' => $request->direccion,
+                'correo' => $request->correo
+            ]);
+
+            return redirect('verMasUsuarioA/' . $id)->withErrors(['error' => 'success']);
+        }
+        catch (Exception $e) {
+            return redirect('verMasUsuarioA/' . $id)->withErrors(['error' => 'Error al actualizar el usuario.']);
+        }
+    }
+
+    public function EliminarDenunciaMas (Request $request, $id) 
+    {
+        $denuncia = Denuncia::find($id);
+        $denuncia->delete();
+
+        return redirect('verMasUsuarioA/'. $request->user)->withErrors(['error'=> 'successs']);
+    }
+
+    public function EliminarUsuarioA ($id) 
+    {
+        UsuarioCreadoComisaria::where('id_victima', $id)->delete();
+        $alertas = Alerta::where('id_victima', $id)->delete();
+        $contactos_get = Contactos::where('id_victima', $id)->get();
+
+        foreach ($contactos_get as $value) {
+            $detalle_contacto = DetalleContacto::find($value->id_detalle_contacto);
+            $detalle_contacto->delete();
+        }
+
+        $contactos = Contactos::where('id_victima', $id)->delete();
+
+        $usuario = UsuarioVictima::find($id);
+        $usuario->delete();
+
+        return redirect('UsuariosA')->withErrors(['error'=> 'success']);
     }
 
     // Comisarias
@@ -488,7 +562,7 @@ class AdministradorController extends Controller
                     'id_detalle_contacto' => $detalle_contacto->id
                 ]);
 
-                return redirect('ContactosA');
+                return redirect('ContactosA')->withErrors(['error' => 'success']);
             }
             else {
                 return redirect('ContactosA')->withErrors(['error' => 'Hubo un error al registrar el contacto, verifique los datos (DNI). ']);
@@ -511,7 +585,7 @@ class AdministradorController extends Controller
             'dirrecion' => $request->direccion
         ]);
 
-        return redirect('verMasContacto' . '/' . $id);
+        return redirect('verMasContacto' . '/' . $id)->withErrors(['error' => 'success']);
     }
 
     public function EliminarContacto ($id) 
@@ -520,9 +594,18 @@ class AdministradorController extends Controller
         $contacto->delete();
         $detalle_contacto = DetalleContacto::where('id', $contacto->id_detalle_contacto)->delete();
 
-        return redirect('ContactosA');
+        return redirect('ContactosA')->withErrors(['error' => 'successs']);
     }    
     
+    public function EliminarContactoV (Request $request, $id) 
+    {
+        $contacto = Contactos::find($id);
+        $contacto->delete();
+        $detalle_contacto = DetalleContacto::where('id', $contacto->id_detalle_contacto)->delete();
+
+        return redirect('verMasUsuarioA/' . $request->id)->withErrors(['error' => 'successss']);
+    }
+
     public function verMasContacto ($id) 
     {
         try {
@@ -580,5 +663,147 @@ class AdministradorController extends Controller
         return redirect('PerfilA');
     }
 
-    // Ver mas
+    // Comisaria 
+    public function ComisariaA () 
+    {
+        return view('admin/comisarias', [
+            'usuario_comisaria' => User::find($_SESSION['id_usuario']),
+            'usuarios' => UsuarioComisaria::get(),
+            'usuarios_comisaria' => []
+        ]);
+    }
+
+    public function verComisaria ($id) 
+    {
+        $comisaria = UsuarioComisaria::find($id);
+
+        return view('admin/verComisaria', [
+            'comisaria' => $comisaria,
+
+            'n_denuncias' => Denuncia::where('id_comisaria', $comisaria->id)->count(),
+            'n_usuarios_creados' => UsuarioCreadoComisaria::where('id_comisaria', $comisaria->id)->count()
+        ]);
+    }
+
+    public function editComisaria (Request $request, $id) {
+        $comisaria = UsuarioComisaria::find($id);
+        $comisaria->update([
+            'nombre' => $request->nombre,
+            'correo' => $request->correo,
+            'direccion' => $request->direccion,
+        ]);
+
+        return redirect('verComisaria/' . $id)->withErrors(['error' => 'success']);
+    }
+
+    public function eliminarComisaria ($id) 
+    {
+        $comisaria = UsuarioComisaria::find($id);
+        $comisaria->estado = '0';
+        $comisaria->save();
+
+        return redirect('ComisariaA')->withErrors(['error' => 'successs']);
+    }
+
+
+    public function EvidenciasA () 
+    {
+        try {
+            if (isset($_SESSION['usuario'])) {
+
+                $evidencias = Evidencia::get();
+
+                return view('./admin/evidencias', [
+                    'usuario_comisaria' => User::find($_SESSION['id_usuario']),
+                    'evidencias' => $evidencias
+                ]);
+
+            } 
+            else {
+                return redirect('/InicioSesion');
+            }
+        } catch (Exception $e) {
+            return redirect('/InicioSesion');
+        }
+    }
+
+    public function traerEvidencias (Request $request) 
+    {
+        $evidencias_get = Evidencia::whereBetween('created_at', [$request->fecha_inicio, $request->fecha_fin])->get();
+        $evidencias = Collection::make($evidencias_get)->map(function ($e) {
+            $data = [
+                'id' => $e->id,
+                'id_victima' => $e->id_victima,
+                'descripcion' => $e->descripcion,
+                'evidencia_media' => $e->evidencia_media,
+                'datos_agresor' => $e->datos_agresor,
+                'created_at' => Carbon::parse($e->created_at)->format('Y-m-d H:i:s')
+            ];
+
+            return $data;
+        });
+
+        return response()->json([
+            'evidencias' => $evidencias
+        ]);
+    }
+
+    public function traerEvidenciasTotal (Request $request) 
+    {
+        $evidencias = Collection::make(Evidencia::all())->map(function ($e) {
+            $data = [
+                'id' => $e->id,
+                'id_victima' => $e->id_victima,
+                'descripcion' => $e->descripcion,
+                'evidencia_media' => $e->evidencia_media,
+                'datos_agresor' => $e->datos_agresor,
+                'created_at' => Carbon::parse($e->created_at)->format('Y-m-d H:i:s')
+            ];
+
+            return $data;
+        });
+
+        return response()->json([
+            'evidencias' => $evidencias
+        ]);
+    }
+
+    public function traerReporteAlertas (Request $request) 
+    {
+        $reporte_alerta_get = ReporteAlertas::whereBetween('created_at', [$request->fecha_inicio, $request->fecha_fin])->get();
+        $reporte_alerta = Collection::make($reporte_alerta_get)->map(function ($e) {
+            $data = [
+                'id' => $e->id,
+                'id_victima' => $e->id_victima,
+                'dni' => UsuarioVictima::find($e->id_victima)->dni,
+                'status' => $e->status,
+                'created_at' => Carbon::parse($e->created_at)->format('Y-m-d H:i:s')
+            ];
+
+            return $data;
+        });
+
+        return response()->json([
+            'reporteAlertas' => $reporte_alerta
+        ]);
+    }
+
+    public function traerReporteAlertasTotal (Request $request) 
+    {
+        $reporte_alerta = Collection::make(ReporteAlertas::all())->map(function ($e) {
+            $data = [
+                'id' => $e->id,
+                'id_victima' => $e->id_victima,
+                'dni' => UsuarioVictima::find($e->id_victima)->dni,
+                'status' => $e->status,
+                'created_at' => Carbon::parse($e->created_at)->format('Y-m-d H:i:s')
+            ];
+
+            return $data;
+        });
+
+        return response()->json([
+            'reporteAlertas' => $reporte_alerta
+        ]);
+    }
 }

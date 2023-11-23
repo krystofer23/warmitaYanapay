@@ -50,12 +50,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a>Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a>Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="">
@@ -92,8 +92,9 @@
 
         <section class="sec-denuncias">
             <div class="s-denuncia-top">
-                <form action="">
-                    <input type="search" placeholder="Buscar">
+                <form action="{{ url('BuscarUsuarioUA') }}" method="POST">
+                    @csrf
+                    <input name="dni" maxlength="8" type="search" placeholder="Buscar">
                 </form>
 
                 <div class="d-flex gap-3">
@@ -101,7 +102,7 @@
                         <option selected value="1">Todos los usuarios</option>
                         <option value="2">Usuarios creados por la comisaria</option>
                     </select>
-                    <button id="agregar_usuarios">AGREGAR USUARIO</button>
+         
                 </div>
             </div>
 
@@ -132,8 +133,10 @@
                                 <form action="{{ url('verMasUsuarioA') . '/' . $row->id }}" method="GET">
                                     <button style="background: #f4bd61;">Ver más</button>
                                 </form>
-                                <form action="{{ url('') . '/' . $row->id }}" method="GET">
-                                    <button class="btn btn-danger mt-1" style="margin-bottom: 10px">Eliminar</button>
+                                <form action="{{ url('EliminarUsuarioA') . '/' . $row->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger mt-1" style="">Eliminar</button>
                                 </form>
                             </td>
                         </tr>
@@ -170,7 +173,9 @@
                                 <form action="{{ url('verMasUsuarioA') . '/' . $row->id }}" method="GET">
                                     <button style="background: #f4bd61;">Ver más</button>
                                 </form>
-                                <form action="{{ url('') . '/' . $row->id }}" method="GET">
+                                <form action="{{ url('EliminarUsuarioA') . '/' . $row->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
                                     <button class="btn btn-danger mt-1" style="">Eliminar</button>
                                 </form>
                             </td>
@@ -183,7 +188,7 @@
     </main>
 
     <section class="form-registro-no-usuarios none">
-        <form action="{{ url('RegistrarVictima') }}" method="POST">
+        <form action="{{ url('RegistrarVictimaA') }}" method="POST">
             <h2>REGISTRO DE USUARIO</h2>
             <p style="color: #5c5c5c; padding-bottom: 20px">Por favor, ingrese los datos de la victima para registrarlo
                 en el sistema.</p>
@@ -217,12 +222,18 @@
         </form>
     </section>
 
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            @foreach ($errors->all() as $error)
-                <a href="{{ url('/Usuarios') }}">{{ $error }}</a>
-            @endforeach
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/UsuariosA') }}">Usuario eliminado</a>
         </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/UsuariosA') }}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
     @endif
 
     <script>

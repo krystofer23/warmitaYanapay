@@ -54,10 +54,10 @@ class UsuarioController extends Controller
                 'id_comisaria' => $_SESSION['id_usuario']
             ]);
 
-            return redirect('/Usuarios');
+            return redirect('/Usuarios')->withErrors(['error' => 'success']);
         }
         catch (Exception $e) {
-            return redirect('/Usuarios')->withErrors(['error' => 'Hubo un error al registrar, verifica el DNI o los datos. ' . $e->getMessage()]);
+            return redirect('/Usuarios')->withErrors(['error' => 'Hubo un error al registrar, verifica el DNI o los datos. ']);
         }
     }
 

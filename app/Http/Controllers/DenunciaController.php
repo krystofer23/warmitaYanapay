@@ -63,7 +63,7 @@ class DenunciaController extends Controller
                     'prueba_media' => ''
                 ]);
     
-                return redirect('/Denuncias');
+                return redirect('/Denuncias')->withErrors(['error' => 'successs']);
             }
         }
         catch (Exception $e) {
@@ -75,6 +75,6 @@ class DenunciaController extends Controller
         $denuncia = Denuncia::find($id);
         $denuncia->delete();
 
-        return redirect('/Denuncias');
+        return redirect('/Denuncias')->withErrors(['error' => 'success']);
     }
 }

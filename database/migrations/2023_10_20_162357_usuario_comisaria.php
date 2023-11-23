@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('direccion');
             $table->string('correo')->unique();
             $table->string('clave');
+            $table->string('estado')->default('1');
             $table->timestamps();
         });
     }

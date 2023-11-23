@@ -26,55 +26,46 @@
             <div class="border-bottom px-4 d-flex justify-content-between align-items-center">
                 <div class="d-flex gap-3 align-items-center">
                     <img src="../img/Logo.png" alt="" style="height: 80px">
-                    <h3 class="m-0">Información del contacto</h3>
+                    <h3 class="m-0">Información de la comisaria</h3>
                 </div>
-                <span>Fecha de registro: {{ $detalle_contacto->created_at }}</span>
+                <span>Fecha de registro: {{ $comisaria->created_at }}</span>
             </div>
             <div class="d-flex w-100">
                 <div class="p-4 w-100 border-end">
-                    <h4>Contacto</h4>
+                    <h4>Comisaria {{ $comisaria->nombre }}</h4>
 
-                    <form action="{{ url('EditarContacto') . '/' . $id }}" method="POST">
+                    <form action="{{ url('editComisaria') . '/' . $comisaria->id }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="w-100">
-                            <span class="pb-2" style="font-size: 13px">Número de celular</span>
-                            <input maxlength="9" name="celular" class="inp-p" type="text" value="{{ $detalle_contacto->celular }}">
+                            <span class="pb-2" style="font-size: 13px">Nombre</span>
+                            <input name="nombre" class="inp-p" type="text" value="{{ $comisaria->nombre }}">
                         </div>
 
-                        <div class="d-flex gap-3">
-                            <div class="w-100">
-                                <span class="pb-2" style="font-size: 13px">Nombre</span>
-                                <input name="nombre" class="inp-p" type="text" value="{{ $detalle_contacto->nombre }}">
-                            </div>
-                            <div class="w-100">
-                                <span class="pb-2" style="font-size: 13px">Apellido</span>
-                                <input name="apellido" class="inp-p" type="text" value="{{ $detalle_contacto->apellido }}">
-                            </div>
+                        <div class="w-100">
+                            <span class="pb-2" style="font-size: 13px">Correo</span>
+                            <input name="correo" class="inp-p" type="text" value="{{ $comisaria->correo }}">
                         </div>
+
                         <div class="w-100">
                             <span class="pb-2" style="font-size: 13px">Dirección</span>
-                            <br>
-                            <input name="direccion" class="inp-p" type="text" value="{{ $detalle_contacto->dirrecion }}">
+                            <input name="direccion" class="inp-p" type="text" value="{{ $comisaria->direccion }}">
                         </div>
+
                         <button class="btn-edit-d">Guardar cambios</button>
                     </form>
                 </div>
                 <div class="w-100 p-4">
-                    <h4>REGISTRADA(O) POR {{ ucwords($victima->nombre) }} {{ ucwords($victima->apellido) }}</h4>
+                    <h4></h4>
 
                     <div style="width: 100%;">
                         <div class="w-100">
-                            <span class="pb-2" style="font-size: 13px">Número de contactos en total </span>
-                            <p class="pb-2 border-bottom">{{ $t_contactos }}</p>
+                            <span class="pb-2" style="font-size: 13px">Número de denuncias en total </span>
+                            <p class="pb-2 border-bottom">{{ $n_denuncias }}</p>
                         </div>
                         <div class="w-100">
-                            <span class="pb-2" style="font-size: 13px">DNI </span>
-                            <p class="pb-2 border-bottom">{{ $victima->dni }}</p>
-                        </div>
-                        <div class="w-100">
-                            <span class="pb-2" style="font-size: 13px">Celular de la victima</span>
-                            <p class="pb-2 border-bottom">{{ $victima->celular }}</p>
+                            <span class="pb-2" style="font-size: 13px">Usuarios creado por la comisaria </span>
+                            <p class="pb-2 border-bottom">{{ $n_usuarios_creados }}</p>
                         </div>
                     </div>
                 </div>

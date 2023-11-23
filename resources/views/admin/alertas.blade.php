@@ -49,12 +49,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a>Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a>Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="">
@@ -113,7 +113,7 @@
 
                         <div class="d-flex align-items-center">
                             <span class="badge bg-danger rounded-pill">N° {{$row->id}}</span>
-                            <form action="{{ url('EliminarAlerta') . '/' . $row->id_victima }}" class="ms-2" method="POST">
+                            <form action="{{ url('desacrivarAlerta') . '/' . $row->id_victima }}" class="ms-2" method="POST">
                                 @csrf
                                 @method('DELETE')
                                 <button style="background-color: #00000000; border: none;"><i class="fa-solid fa-trash" style="cursor: pointer"></i></button>
@@ -122,7 +122,8 @@
                     </div>
                     <div class="pt-3 d-flex gap-1 align-items-center justify-content-between w-100" style="overflow: hidden;">
                         <span class="border border-danger px-3 py-2 rounded-3 text-danger">DNI: {{ $row->dni }}</span>
-                        <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
+                        <form action="{{ url('verMasUsuarioA') . '/' . $row->id_victima }}" method="GET">
+                            <input type="text" name="page" class="none" value="Alertas">
                             <button class="btn btn-danger fs-7 px-3 py-2 border border-danger">Ver información de la victima</button>
                         </form>
                     </div>
@@ -132,6 +133,20 @@
             </ul>
         </section>
     </main>
+
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/AlertaA') }}">Alerta desactivada</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/AlertaA') }}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.7.1/dist/leaflet.js"></script>
     <script>

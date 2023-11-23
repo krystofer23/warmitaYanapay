@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 
 class VerMasController extends Controller
 {
-    public function verMasDenuncia ($id) 
+    public function verMasDenuncia (Request $request, $id) 
     {
         $denuncia = Denuncia::find($id);
         $comisaria = UsuarioComisaria::where('id', $denuncia->id_comisaria)->first();
@@ -57,11 +57,12 @@ class VerMasController extends Controller
         return view('./comisaria/verMasDenuncia', [
             'denuncia' => $denuncia,
             'victima' => $victima,
-            'comisaria' => $comisaria
+            'comisaria' => $comisaria,
+            'volver' => strval($request->page)
         ]);
     }
 
-    public function verMasUsuario ($id) 
+    public function verMasUsuario (Request $request, $id) 
     {
         $usuario = UsuarioVictima::find($id);
         $denuncias = Collection::make(Denuncia::where('id_victima', $usuario->dni)->get())->map(function ($ele) {
@@ -78,7 +79,8 @@ class VerMasController extends Controller
 
         return view('./comisaria/verMasUsuario', [
             'usuario' => $usuario,
-            'denuncias' => $denuncias
+            'denuncias' => $denuncias,
+            'volver' => strval($request->page)
         ]);
     }
 
@@ -91,10 +93,10 @@ class VerMasController extends Controller
                 'lugar' => $request->lugar
             ]);
 
-            return redirect('verMasDenuncia/' . $id);
+            return redirect('verMasDenuncia/' . $id)->withErrors(['error' => 'success']);
         }
         catch (Exception $e) {
-            return redirect('verMasDenuncia/' . $id);
+            return redirect('verMasDenuncia/' . $id)->withErrors(['error' => 'Error al actualizar la denuncia.']);
         }
     }
 
@@ -108,10 +110,10 @@ class VerMasController extends Controller
                 'correo' => $request->correo
             ]);
 
-            return redirect('verMasUsuario/' . $id);
+            return redirect('verMasUsuario/' . $id)->withErrors(['error' => 'success']);
         }
         catch (Exception $e) {
-            return redirect('verMasUsuario/' . $id);
+            return redirect('verMasUsuario/' . $id)->withErrors(['error' => 'Error al actualizar el usuario.']);
         }
     }
 }

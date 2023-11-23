@@ -139,11 +139,17 @@
     </section>
 
     @if($errors->any())
-    <div class="alert alert-danger mt-3">
     @foreach($errors->all() as $error)
-        <a href="{{ url('/Perfil') }}">{{ $error }}</a>
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/Perfil') }}">Datos actualizados</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/Perfil') }}">{{ $error }}</a>
+        </div>
+        @endif
     @endforeach
-    </div>
     @endif
 
     <script>

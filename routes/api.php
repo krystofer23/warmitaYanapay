@@ -51,6 +51,9 @@ Route::prefix('app')->group(function () {
         Route::post('create', 'store');
         Route::post('delete', 'destroy');
 
+        Route::post('edit', 'update');
+        Route::get('getEvidence', 'getEvidence');
+
     });
 
     Route::controller(ContactosController::class)->prefix('contacts')->group(function () {
@@ -58,6 +61,9 @@ Route::prefix('app')->group(function () {
         Route::post('list', 'index');
         Route::post('create', 'RegistroContacto');
         Route::post('delete', 'EliminarContacto');
+
+        Route::put('edit', 'update');
+        Route::get('getContact', 'getContact');
 
     });
     

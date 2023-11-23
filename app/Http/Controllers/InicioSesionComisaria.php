@@ -39,10 +39,17 @@ class InicioSesionComisaria extends Controller
                 return redirect('/InicioSesion')->withErrors(['error' => 'Credenciales inválidas. Por favor, verifica tu correo y contraseña e intenta de nuevo.']);
             }
             else {
-                $_SESSION['usuario'] = $user->nombre;
-                $_SESSION['id_usuario'] = $user->id;
-    
-                return redirect('/');
+                if ($user->estado == '1') {
+                    $_SESSION['usuario'] = $user->nombre;
+                    $_SESSION['id_usuario'] = $user->id;
+        
+                    return redirect('/');
+                } 
+                else {
+                    session_destroy();
+        
+                    return redirect('/InicioSesion')->withErrors(['error' => 'Cuenta inexistente. Por favor, verifica tu correo y contraseña e intenta de nuevo.']);
+                }
             }
         }
         catch (Exception $e) {

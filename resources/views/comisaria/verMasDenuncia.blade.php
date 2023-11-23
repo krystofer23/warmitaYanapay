@@ -70,7 +70,7 @@
                         <span class="pb-2" style="font-size: 13px">Comisaria</span>
                         <p class="pb-2 border-bottom">{{ $comisaria->nombre }}</p>
                     </div>
-                    <form action="{{ url('ActualizarDenuncia') . '/' . $comisaria->id }}" method="POST">
+                    <form action="{{ url('ActualizarDenuncia') . '/' . $denuncia->id }}" method="POST">
                         @csrf
                         @method('PUT')
                         <div class="w-100">
@@ -98,18 +98,31 @@
         </div>
         <div class="py-3 d-flex justify-content-end container-info-m-d" style="background-color: #00000000 !important">
             <button class="btn btn-secondary" onclick="imprimir()">Imprimir</button>
-
-            <a href="{{ url('Denuncias') }}" class="ms-2 btn-primarys">Volver</a>
+            <button class="ms-2 btn-primarys" onclick="goBack()">Volver</button>
         </div>
     </div>
 
     @if($errors->any())
-        <div class="alert alert-danger mt-3">
     @foreach($errors->all() as $error)
-        <a href="{{ url('/VerMasDenuncia') . '/' . $denuncia->id }}">{{ $error }}</a>
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/VerMasDenuncia') . '/' . $denuncia->id }}">Denuncia actualizada</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/VerMasDenuncia') . '/' . $denuncia->id }}">{{ $error }}</a>
+        </div>
+        @endif
     @endforeach
-    </div>
     @endif
+
+    <a href="{{ url('/VerMasDenuncia') . '/' . $denuncia->id }}">{{ session('mensaje') }}</a>
+
+    <script>
+        function goBack(e) {
+            window.history.back();
+        }
+    </script>
 
     <script>
         function imprimir() {

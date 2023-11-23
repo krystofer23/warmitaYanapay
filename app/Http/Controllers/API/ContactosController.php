@@ -68,7 +68,29 @@ class ContactosController extends Controller
         
         return response()->json([
             'status' => 'success',
-            'message' => 'Contacto creado con exito'
+            'message' => 'Contacto eliminado con exito'
         ]);
+    }
+
+    public function update (Request $request) 
+    {
+        $detalle_contacto = DetalleContacto::find($request->id);
+        $detalle_contacto->update([
+            'nombre' => $request->nombre,
+            'apellido' => $request->apellido,
+            'celular' => $request->celular,
+            'dirrecion' => $request->direccion
+        ]);
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Contacto actualizado con exito'
+        ]);
+    }
+
+    public function getContact (Request $request)
+    {
+        $detalle_contacto = DetalleContacto::find($request->id);
+        return $detalle_contacto;
     }
 }

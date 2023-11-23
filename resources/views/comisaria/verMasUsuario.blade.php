@@ -56,7 +56,7 @@
                         <div class="w-100">
                             <span class="pb-2" style="font-size: 13px">Celular</span>
                             <br>
-                            <input name="celular" class="inp-p" type="text" value="{{ $usuario->celular }}">
+                            <input maxlength="9" name="celular" class="inp-p" type="text" value="{{ $usuario->celular }}">
                         </div>
                         <div class="w-100">
                             <span class="pb-2" style="font-size: 13px">Dirección</span>
@@ -89,6 +89,7 @@
                                     <td>{{ $row->created_at }}</td>
                                     <td>
                                         <form action="{{ url('verMasDenuncia') . '/' . $row->id }}" method="GET">
+                                            <input type="text" name="page" class="none" value="verMasUsuario/{{ $usuario->id }}">
                                             <button class=" btn btn-warning px-3 py-2"
                                                 style="background: #f4bd61; margin-bottom: 10px">Ver más</button>
                                         </form>
@@ -108,10 +109,29 @@
         </div>
         <div class="py-3 d-flex justify-content-end container-info-m-d" style="background-color: #00000000 !important">
             <button class="btn btn-secondary" onclick="imprimir()">Imprimir</button>
-        
-            <a href="{{ url('Usuarios') }}" class="ms-2 btn-primarys">Volver</a>
+            <button class="ms-2 btn-primarys" onclick="goBack()">Volver</button>
         </div>
     </div>
+
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/VerMasUsuario') . '/' . $usuario->id }}">Usuario actualizado</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/VerMasUsuario') . '/' . $usuario->id }}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
+    @endif
+
+    <script>
+        function goBack(e) {
+            window.history.back();
+        }
+    </script>
 
     <script>
         function imprimir() {

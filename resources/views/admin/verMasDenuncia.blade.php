@@ -98,8 +98,7 @@
         </div>
         <div class="py-3 d-flex justify-content-end container-info-m-d" style="background-color: #00000000 !important">
             <button class="btn btn-secondary" onclick="imprimir()">Imprimir</button>
-
-            <a href="{{ url('DenunciasA') }}" class="ms-2 btn-primarys">Volver</a>
+            <button class="ms-2 btn-primarys" onclick="goBack()">Volver</button>
         </div>
     </div>
 
@@ -110,6 +109,12 @@
     @endforeach
     </div>
     @endif
+
+    <script>
+        function goBack(e) {
+            window.history.back();
+        }
+    </script>
 
     <script>
         function imprimir() {

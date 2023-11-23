@@ -36,7 +36,7 @@
                 <i class="fa-solid fa-bell"></i>
                 <a href="{{ url('AlertaA') }}">Alertas</a>
             </li>
-            
+
             <li class="">
                 <i class="fa-solid fa-clipboard"></i>
                 <a href="{{ url('DenunciasA') }}">Denuncias</a>
@@ -49,12 +49,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <a>Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a>Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="li-active">
@@ -91,8 +91,9 @@
 
         <section class="sec-denuncias">
             <div class="s-denuncia-top">
-                <form action="">
-                    <input type="search" placeholder="Buscar">
+                <form action="{{ url('BuscarUsuarioUC') }}" method="POST">
+                    @csrf
+                    <input name="dni" maxlength="8" type="search" placeholder="Buscar">
                 </form>
 
                 <div class="d-flex gap-3">
@@ -182,12 +183,22 @@
         </form>
     </section>
 
-    @if ($errors->any())
-        <div class="alert alert-danger mt-3">
-            @foreach ($errors->all() as $error)
-                <a href="{{ url('/ContactosA') }}">{{ $error }}</a>
-            @endforeach
+    @if($errors->any())
+    @foreach($errors->all() as $error)
+        @if($error == "success")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/ContactosA') }}">Contacto creado</a>
         </div>
+        @elseif($error == "successs")
+        <div class="alert alert-success mt-3">
+            <a href="{{ url('/ContactosA') }}">Contacto eliminado</a>
+        </div>
+        @else 
+        <div class="alert alert-danger mt-3">
+            <a href="{{ url('/ContactosA') }}">{{ $error }}</a>
+        </div>
+        @endif
+    @endforeach
     @endif
 
     <script>

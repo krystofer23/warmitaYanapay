@@ -91,6 +91,7 @@
                         @endif
                         <td>
                             <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
+                                <input type="text" name="page" class="none" value="ReporteDeAlertas">
                                 <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
                             </form>
                         </td>
@@ -115,6 +116,7 @@
                         <td style="text-align: center !important;" class="px-4">{{ $row->created_at }}</td>
                         <td>
                             <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
+                                <input type="text" name="page" class="none" value="ReporteDeAlertas">
                                 <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
                             </form>
                         </td>
@@ -139,6 +141,7 @@
                         <td style="text-align: center !important;" class="px-4">{{ $row->created_at }}</td>
                         <td>
                             <form action="{{ url('verMasUsuario') . '/' . $row->id_victima }}" method="GET">
+                                <input type="text" name="page" class="none" value="ReporteDeAlertas">
                                 <button class="btn btn-warning fs-7 px-3 py-2 border">Ver información de la victima</button>
                             </form>
                         </td>

@@ -32,7 +32,7 @@
                 <i class="fa-solid fa-bell"></i>
                 <a href="{{ url('AlertaA') }}">Alertas</a>
             </li>
-            
+
             <li class="">
                 <i class="fa-solid fa-clipboard"></i>
                 <a href="{{ url('DenunciasA') }}">Denuncias</a>
@@ -45,12 +45,12 @@
 
             <li class="">
                 <i class="fa-solid fa-building-flag"></i>
-                <article>Comisarias</a>
+                <a href="{{ url('ComisariaA') }}">Comisarias</a>
             </li>
 
             <li class="">
                 <i class="fa-solid fa-receipt"></i>
-                <a>Evidencias</a>
+                <a href="{{ url('EvidenciasA') }}">Evidencias</a>
             </li>
 
             <li class="">
